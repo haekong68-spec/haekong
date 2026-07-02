@@ -121,19 +121,17 @@ a.nav-logo {
   letter-spacing: 1px;
 }
 .nav a {
-  padding: 18px 18px;
-  font-size: 15px; font-weight: 500;
-  color: var(--text-soft);
+  padding: 18px 6px;
+  font-size: clamp(15px,1.15vw,19px);
+  font-weight: 600;
+  color: #24476B;
   text-decoration: none;
-  border-bottom: 2.5px solid transparent;
-  transition: color var(--transition), border-color var(--transition);
+  transition: color var(--transition);
   white-space: nowrap;
+  text-shadow: 0 1px 8px rgba(235,250,255,.75);
 }
 .nav a:hover { color: var(--main-dark); }
-.nav a.active {
-  color: var(--main-dark);
-  border-bottom-color: var(--main-dark);
-}
+.nav a.active { color: var(--main-dark); font-weight: 800; }
 
 /* ── 본문 컨테이너 ── */
 .container {
