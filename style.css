@@ -105,9 +105,9 @@ body::before {
 }
 .nav-inner {
   display: flex; align-items: center;
-  max-width: var(--page-width); width: 100%;
-  padding: 0 12px;
-  gap: 2px;
+  max-width: 100%; width: 100%;
+  padding: 0 clamp(18px,4vw,52px);
+  gap: clamp(10px,1.4vw,22px);
 }
 a.nav-logo {
   font-family: var(--katuri);
