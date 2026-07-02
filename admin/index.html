@@ -81,20 +81,20 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-title">⭐ 한마디 & 하고픈 말</div>
-      <div class="form-field"><label class="input-label">제목 옆 한줄 텍스트</label><input class="input" id="f-head-sub" type="text"></div>
-      <div class="form-field"><label class="input-label">오늘의 한마디 (줄바꿈=엔터)</label><textarea class="input" id="f-quote" rows="3"></textarea></div>
-      <div class="form-field"><label class="input-label">하고픈 말</label><textarea class="input" id="f-msg" rows="3"></textarea></div>
+      <div class="card-title">⭐ 히어로 인사 · 문구</div>
+      <div class="form-field"><label class="input-label">히어로 인사말 (상단 큰 글씨)</label><textarea class="input" id="f-hero-greet" rows="2"></textarea></div>
+      <div class="form-field"><label class="input-label">히어로 하단 문구 (줄바꿈=엔터)</label><textarea class="input" id="f-hero-quote" rows="3"></textarea></div>
       <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
     </div>
     <div class="card">
       <div class="card-title">해콩 특징</div>
       <div class="form-field"><label class="input-label">이름</label><input class="input" id="f-info-name" type="text"></div>
-      <div class="form-field"><label class="input-label">한마디로</label><input class="input" id="f-info-catchphrase" type="text"></div>
       <div class="form-field"><label class="input-label">성격 태그 (쉼표 구분)</label><input class="input" id="f-info-tags" type="text"></div>
       <div class="form-field"><label class="input-label">MBTI</label><input class="input" id="f-info-mbti" type="text"></div>
       <div class="form-field"><label class="input-label">팬닉</label><input class="input" id="f-info-fandom" type="text"></div>
-      <div class="form-field"><label class="input-label">생일/데뷔</label><input class="input" id="f-info-dates" type="text"></div>
+      <div class="form-field"><label class="input-label">데뷔 (예: 26.7.10)</label><input class="input" id="f-info-debut" type="text"></div>
+      <div class="form-field"><label class="input-label">생일 표시용 (예: 7.17)</label><input class="input" id="f-info-birth" type="text"></div>
+      <div class="form-field"><label class="input-label">생일 D-Day용 (MM-DD, 예: 07-17)</label><input class="input" id="f-birthday" type="text" placeholder="07-17"></div>
       <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
     </div>
     <div class="card">
@@ -106,14 +106,15 @@
         <div class="form-field"><label class="input-label">좋아 4</label><input class="input" id="f-like4" type="text"></div>
         <div class="form-field"><label class="input-label">싫어 1</label><input class="input" id="f-dislike1" type="text"></div>
         <div class="form-field"><label class="input-label">싫어 2</label><input class="input" id="f-dislike2" type="text"></div>
+        <div class="form-field"><label class="input-label">싫어 3</label><input class="input" id="f-dislike3" type="text"></div>
       </div>
       <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
     </div>
     <div class="card">
-      <div class="card-title">♥ TMI</div>
-      <div class="form-field"><label class="input-label">좋아하는 음식</label><input class="input" id="f-tmi-food" type="text"></div>
-      <div class="form-field"><label class="input-label">요즘 듣는 노래</label><input class="input" id="f-tmi-song" type="text"></div>
-      <div class="form-field"><label class="input-label">최근 읽은 책</label><input class="input" id="f-tmi-book" type="text"></div>
+      <div class="card-title">🖼 히어로 · 팬캐릭터 이미지</div>
+      <div class="form-field"><label class="input-label">히어로 캐릭터 이미지 URL (비우면 기본 이미지)</label><input class="input" id="f-hero-char" type="url" placeholder="https://.../image.jpg"></div>
+      <div class="form-field"><label class="input-label">팬캐릭터 이미지 URL</label><input class="input" id="f-fan-char" type="url" placeholder="https://.../image.png"></div>
+      <div style="font-size:11px;color:var(--text-soft);margin-bottom:8px">핫링크는 SOOP 비공개 게시판 이미지 주소 권장.</div>
       <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
     </div>
     <div class="card">
@@ -140,15 +141,6 @@
         <div class="form-field full" style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="addOriginalSong()">+ 추가</button></div>
       </div>
       <div id="os-list" style="margin-top:6px"></div>
-    </div>
-      <div class="form-field"><label class="input-label">SOOP URL</label><input class="input" id="f-link-soop" type="url" placeholder="https://"></div>
-      <div class="form-field"><label class="input-label">YouTube URL</label><input class="input" id="f-link-youtube" type="url" placeholder="https://"></div>
-      <div class="form-field"><label class="input-label">Fan Cafe URL</label><input class="input" id="f-link-fancafe" type="url" placeholder="https://"></div>
-      <div class="form-field"><label class="input-label">Fancim URL</label><input class="input" id="f-link-fancim" type="url" placeholder="https://"></div>
-      <div class="form-field"><label class="input-label">M Fancim URL</label><input class="input" id="f-link-mfancim" type="url" placeholder="https://"></div>
-      <div class="form-field"><label class="input-label">♥ 버튼 URL</label><input class="input" id="f-link-heart" type="url" placeholder="https://"></div>
-      <div class="form-field"><label class="input-label">코드 버튼 URL</label><input class="input" id="f-link-code" type="url" placeholder="https://"></div>
-      <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
     </div>
   </div>
 
@@ -398,11 +390,10 @@
   const ADMIN_PASSWORD = '1234';
 
   const profileKeys = [
-    'avatar','head-sub','quote','msg','soop-id',
-    'info-name','info-catchphrase','info-tags','info-mbti','info-fandom','info-dates',
-    'like1','like2','like3','like4','dislike1','dislike2',
-    'tmi-food','tmi-song','tmi-book','days',
-    'link-soop','link-youtube','link-fancafe','link-fancim','link-mfancim','link-heart','link-code'
+    'avatar','soop-id',
+    'info-name','info-tags','info-mbti','info-fandom','info-debut','info-birth','birthday',
+    'like1','like2','like3','like4','dislike1','dislike2','dislike3','days',
+    'hero-greet','hero-quote','hero-char','fan-char'
   ];
 
   function tryLogin() {
