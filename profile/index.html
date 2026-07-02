@@ -14,8 +14,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Shippori+Mincho:wght@600&display=swap" rel="stylesheet">
 <style>
+  @font-face{ font-family:'Jaram'; src:url('../display.woff') format('woff'); font-display:swap; }
   :root{
-    --ink:#16324F; --ink-soft:#24476B; --ink-mute:#3D6285; --muted:#6E93B5;
+    --ink:#161e4e; --ink-soft:#24476B; --ink-mute:#3D6285; --muted:#6E93B5;
     --aqua:#3E9BD4; --aqua-deep:#1F6FA8; --aqua-soft:#7FC3E8;
     --line:rgba(255,255,255,.62); --line-2:rgba(255,255,255,.42);
     --bg:#DFF2FB; --bg-warm:#CBE9F8;
@@ -52,10 +53,10 @@
     background:transparent; }
   .brand{ display:flex; align-items:center; gap:11px; }
   .mark{ width:42px; height:42px; border-radius:12px; background:var(--aqua); border:1px solid rgba(255,255,255,.6);
-    overflow:hidden; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Jua'; font-size:21px; flex:0 0 auto; cursor:pointer;
+    overflow:hidden; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Jaram','Jua'; font-size:21px; flex:0 0 auto; cursor:pointer;
     box-shadow:0 4px 14px rgba(31,111,168,.3); }
   .mark img{ width:100%; height:100%; object-fit:cover; }
-  .bn{ font-family:'Jua'; font-size:20px; color:var(--ink); letter-spacing:.08em; line-height:1.1; text-shadow:0 1px 10px rgba(235,250,255,.9); }
+  .bn{ font-family:'Jaram','Jua'; font-size:20px; color:var(--ink); letter-spacing:.08em; line-height:1.1; text-shadow:0 1px 10px rgba(235,250,255,.9); }
   .bs{ font-family:'Shippori Mincho'; font-size:9px; color:var(--ink-mute); letter-spacing:.3em; opacity:.9; }
   .nav-links{ margin-left:auto; display:flex; align-items:center; gap:clamp(14px,2vw,32px); }
   .nav-links a{ color:var(--ink-soft); text-decoration:none; font-size:clamp(15px,1.15vw,19px); font-weight:600; white-space:nowrap; transition:color .15s;
@@ -76,15 +77,15 @@
     background:radial-gradient(760px 320px at 82% -12%, rgba(255,255,255,.5), transparent 62%); }
   .hero__top{ display:flex; align-items:center; justify-content:space-between; gap:12px; position:relative; z-index:2; }
   .hero__eyebrow{ font-family:'Shippori Mincho'; letter-spacing:.28em; font-size:12px; color:var(--aqua-deep); opacity:.9; }
-  .hero__date{ font-family:'Jua'; font-size:12px; letter-spacing:.14em; color:#0f3a5c;
+  .hero__date{ font-family:'Jaram','Jua'; font-size:12px; letter-spacing:.14em; color:#0f3a5c;
     background:linear-gradient(180deg,#9be0ff,#7fc3e8); padding:6px 13px; border-radius:999px;
     box-shadow:0 4px 12px rgba(31,111,168,.28); }
-  .hero__greet{ font-family:'Jua'; font-size:clamp(20px,2.4vw,30px); line-height:1.35; margin:15px 0 14px;
+  .hero__greet{ font-family:'Jaram','Jua'; font-size:clamp(20px,2.4vw,30px); line-height:1.35; margin:15px 0 14px;
     position:relative; z-index:2; color:var(--ink); }
   .hero__links{ display:flex; flex-wrap:wrap; gap:9px; position:relative; z-index:2; margin-bottom:18px; }
   .chip{ display:inline-flex; align-items:center; gap:6px; text-decoration:none;
-    background:rgba(255,255,255,.72); color:var(--aqua-deep); font-weight:700; font-size:14px;
-    padding:9px 17px; border-radius:999px; border:1px solid rgba(255,255,255,.8);
+    background:#161e4e; color:#fff; font-weight:700; font-size:14px;
+    padding:9px 17px; border-radius:999px; border:1px solid rgba(255,255,255,.22);
     box-shadow:0 4px 12px rgba(22,50,79,.1); transition:transform .15s, box-shadow .15s; }
   .chip:hover{ transform:translateY(-2px); box-shadow:0 9px 20px rgba(10,40,70,.22); }
   .hero__frame{ position:relative; z-index:2; border-radius:18px; overflow:hidden;
@@ -94,7 +95,7 @@
   .hero__foot{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
     margin-top:18px; position:relative; z-index:2; }
   .hero__quote{ font-size:clamp(15px,1.4vw,18px); line-height:1.8; color:var(--ink-soft); }
-  .hero__closet{ flex:0 0 auto; text-decoration:none; font-family:'Jua'; font-size:15px; color:var(--aqua-deep);
+  .hero__closet{ flex:0 0 auto; text-decoration:none; font-family:'Jaram','Jua'; font-size:15px; color:var(--aqua-deep);
     display:inline-flex; align-items:center; gap:5px; transition:transform .15s; }
   .hero__closet:hover{ transform:translateX(3px); }
 
@@ -104,7 +105,7 @@
     padding:22px 24px; box-shadow:0 14px 36px rgba(22,50,79,.16);
     backdrop-filter:blur(18px) saturate(1.15); -webkit-backdrop-filter:blur(18px) saturate(1.15); }
   .card__eyebrow{ font-family:'Shippori Mincho'; letter-spacing:.24em; font-size:11px; color:var(--aqua-deep); opacity:.85; }
-  .card__title{ font-family:'Jua'; font-size:19px; color:var(--ink); margin:3px 0 14px; letter-spacing:.02em; }
+  .card__title{ font-family:'Jaram','Jua'; font-size:19px; color:var(--ink); margin:3px 0 14px; letter-spacing:.02em; }
   .span-2{ grid-column:1 / -1; }
 
   /* 프로필 정보 */
@@ -112,14 +113,16 @@
   .pf-row:last-child{ border-bottom:0; }
   .pf-row .k{ flex:0 0 74px; font-size:13px; color:var(--muted); font-weight:700; }
   .pf-row .v{ font-size:16px; color:var(--ink); font-weight:700; }
-  .pf-name{ font-family:'Jua'; font-size:26px; color:var(--aqua-deep); margin-bottom:4px; }
+  .pf-name{ font-family:'Jaram','Jua'; font-size:26px; color:var(--aqua-deep); margin-bottom:4px; }
+  .pf-top{ display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .pf-av{ width:66px; height:66px; border-radius:50%; object-fit:cover; border:2px solid var(--aqua-soft); box-shadow:0 5px 16px rgba(31,111,168,.28); flex:0 0 auto; }
   .tags{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
   .tag{ font-size:12px; font-weight:700; color:var(--aqua-deep); background:rgba(255,255,255,.55);
     border:1px solid rgba(255,255,255,.6); padding:5px 11px; border-radius:999px; }
 
   /* 좋아 / 싫어 */
   .ld-block + .ld-block{ margin-top:16px; }
-  .ld-head{ font-family:'Jua'; font-size:15px; margin-bottom:9px; display:flex; align-items:center; gap:7px; }
+  .ld-head{ font-family:'Jaram','Jua'; font-size:15px; margin-bottom:9px; display:flex; align-items:center; gap:7px; }
   .ld-like .ld-head{ color:#2f8fc9; } .ld-bad .ld-head{ color:#5d7fa0; }
   .chips{ display:flex; flex-wrap:wrap; gap:8px; }
   .chips span{ font-size:14px; font-weight:700; padding:8px 15px; border-radius:14px; }
@@ -130,7 +133,7 @@
   .rules{ counter-reset:r; display:grid; gap:11px; }
   .rule{ counter-increment:r; display:flex; gap:13px; align-items:flex-start; }
   .rule::before{ content:counter(r); flex:0 0 30px; height:30px; border-radius:10px;
-    background:var(--aqua); color:#fff; font-family:'Jua'; font-size:15px;
+    background:var(--aqua); color:#fff; font-family:'Jaram','Jua'; font-size:15px;
     display:flex; align-items:center; justify-content:center; margin-top:1px; box-shadow:0 4px 10px rgba(31,111,168,.3); }
   .rule .rt{ font-weight:800; color:var(--ink); font-size:15.5px; }
   .rule .rd{ font-size:13px; color:var(--ink-mute); margin-top:2px; line-height:1.6; }
@@ -166,7 +169,7 @@
   .iq-ov{ position:fixed; inset:0; background:rgba(6,22,40,.5); display:none; align-items:center; justify-content:center; z-index:300; padding:16px; }
   .iq-ov.show{ display:flex; }
   .iq-m{ background:var(--bg); border:1px solid var(--line); border-radius:24px; width:100%; max-width:420px; padding:26px; box-shadow:0 20px 60px rgba(6,30,55,.4); }
-  .iq-t{ font-family:'Jua'; font-size:19px; color:var(--ink); margin-bottom:4px; }
+  .iq-t{ font-family:'Jaram','Jua'; font-size:19px; color:var(--ink); margin-bottom:4px; }
   .iq-d{ font-size:13px; color:var(--ink-soft); margin-bottom:16px; }
   .iq-in{ width:100%; padding:12px 14px; border-radius:12px; border:1.5px solid var(--line); font-size:14px; outline:none; margin-bottom:10px; font-family:inherit; background:#fff; color:var(--ink); }
   .iq-in:focus{ border-color:var(--aqua); }
@@ -213,8 +216,7 @@
   <nav class="topnav">
     <div class="brand">
       <div class="mark" id="avatarWrap" title="해콩">
-        <img id="avatarImg" alt="" style="display:none">
-        <span id="avatarEmoji">🦦</span>
+        <img id="avatarImg" src="../avatar.gif" alt="해콩" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
       <div><div class="bn" id="logoText">해콩</div><div class="bs">HAEKONG · OCEAN</div></div>
     </div>
@@ -259,7 +261,7 @@
       <section class="card">
         <div class="card__eyebrow">ABOUT</div>
         <div class="card__title">프로필</div>
-        <div class="pf-name" id="info-name">해콩</div>
+        <div class="pf-top"><img class="pf-av" src="../avatar.gif" alt="해콩"><div class="pf-name" id="info-name">해콩</div></div>
         <div class="pf-row"><span class="k">데뷔</span><span class="v" id="info-debut">26.7.10</span></div>
         <div class="pf-row"><span class="k">생일</span><span class="v" id="info-birth">7.17</span></div>
         <div class="pf-row"><span class="k">MBTI</span><span class="v" id="info-mbti">ISFJ</span></div>
@@ -290,14 +292,14 @@
         <div class="card__eyebrow">CHAT RULES</div>
         <div class="card__title">채팅 규칙</div>
         <div class="rules">
-          <div class="rule"><div><div class="rt">개인정보 질문</div><div class="rd">빨간약 공개는 싫다에요 ㅜㅜ</div></div></div>
-          <div class="rule"><div><div class="rt">시청자간의 친목</div><div class="rd">해콩이랑 더 친해져요!</div></div></div>
-          <div class="rule"><div><div class="rt">TMI</div><div class="rd">저는 가볼게요 등등</div></div></div>
+          <div class="rule"><div><div class="rt">개인정보 질문</div></div></div>
+          <div class="rule"><div><div class="rt">시청자간의 친목</div></div></div>
+          <div class="rule"><div><div class="rt">TMI</div></div></div>
           <div class="rule"><div><div class="rt">훈수, 리모컨</div></div></div>
-          <div class="rule"><div><div class="rt">타 스트리머 언급</div><div class="rd">해콩이 한테만 집중해주세요</div></div></div>
-          <div class="rule"><div><div class="rt">과도한 일기장</div><div class="rd">모두가 함께하는 공간이에요!</div></div></div>
+          <div class="rule"><div><div class="rt">타 스트리머 언급</div></div></div>
+          <div class="rule"><div><div class="rt">과도한 일기장</div></div></div>
           <div class="rule"><div><div class="rt">나쁜말 받지 않겠습니다!</div></div></div>
-          <div class="rule"><div><div class="rt">호칭은 해콩님 혹은 해콩아 로 통일할께요!</div><div class="rd">님, 너, 니 등…&nbsp; 너무 차가워보이자나요<br>따뜻하게 불러주세요!</div></div></div>
+          <div class="rule"><div><div class="rt">호칭은 해콩님 혹은 해콩아 로 통일할께요!</div></div></div>
         </div>
       </section>
 
@@ -382,10 +384,7 @@
     catch(e){ console.log('profile load', e); }
     const d={ ...defaults, ...saved };
 
-    // SOOP 프사
-    const url=d.avatar||soopAvatar(d['soop-id']);
-    const img=document.getElementById('avatarImg'), em=document.getElementById('avatarEmoji');
-    if(url&&img){ img.onload=function(){ img.style.display='block'; if(em) em.style.display='none'; }; img.onerror=function(){ img.style.display='none'; }; img.src=url; }
+    // 프사 = 고정 움짤(avatar.gif) — HTML에 직접
 
     var setTxt=function(id,v){ var el=document.getElementById(id); if(el&&v!=null&&v!=='') el.textContent=v; };
     var setHtml=function(id,v){ var el=document.getElementById(id); if(el&&v!=null&&v!=='') el.innerHTML=(''+v).replace(/\n/g,'<br>'); };
