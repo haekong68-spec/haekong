@@ -121,6 +121,13 @@
       <div id="os-list" style="margin-top:6px"></div>
     </div>
     <div class="card">
+      <div class="card-title">🏠 메인 페이지</div>
+      <div class="form-field"><label class="input-label">메인 스토리 문구 (줄바꿈 = 엔터)</label><textarea class="input" id="f-main-story" rows="4"></textarea></div>
+      <div class="form-field"><label class="input-label">메인 일러스트 URL (비우면 내장 이미지)</label><input class="input" id="f-main-art" type="text" placeholder="https://... (2560×1024 권장)"></div>
+      <button class="btn" onclick="saveLocalProfile()">💾 저장</button>
+    </div>
+
+    <div class="card">
       <div class="card-title">🔗 관련 링크</div>
       <div class="form-field"><label class="input-label">SOOP URL</label><input class="input" id="f-link-soop" type="url" placeholder="https://"></div>
       <div class="form-field"><label class="input-label">노래책 주소</label><input class="input" id="f-link-song" type="text" placeholder="https://meloming.com/channel/..."></div>
@@ -131,13 +138,6 @@
 
   <!-- 공지 탭 -->
   <div class="tab-panel" id="tab-notice">
-    <div class="card">
-      <div class="card-title">🏠 메인 페이지</div>
-      <div class="form-field"><label class="input-label">메인 스토리 문구 (줄바꿈 = 엔터)</label><textarea class="input" id="f-main-story" rows="4"></textarea></div>
-      <div class="form-field"><label class="input-label">메인 일러스트 URL (비우면 내장 이미지)</label><input class="input" id="f-main-art" type="text" placeholder="https://... (2560×1024 권장)"></div>
-      <button class="btn" onclick="saveLocalProfile()">💾 저장</button>
-    </div>
-
     <div class="card">
       <div class="card-title">공지 추가</div>
       <div class="form-field"><label class="input-label">제목 *</label><input class="input" id="noti-title"></div>
