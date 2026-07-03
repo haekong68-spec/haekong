@@ -109,6 +109,10 @@ function sendInquiry(){
 }
 window.addEventListener('load',function(){document.body.classList.add('ready')});
 setTimeout(function(){document.body.classList.add('ready')},1600);
+
+</script>
+<script src="fx.js"></script>
+<script>
 (function(){
   if(typeof window.fxHearts==='function') return;
   var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -127,13 +131,12 @@ setTimeout(function(){document.body.classList.add('ready')},1600);
   document.addEventListener('click',function(e){
     if(rm) return;
     for(var i=0;i<5;i++){
-      var p=document.createElement('span'); p.className='fxfb'; p.textContent='🫧';
+      var p=document.createElement('span'); p.className='fxfb'; p.textContent=['🐚','🫧','🐚','🌀','🐚'][i%5];
       p.style.cssText='left:'+(e.clientX-8+(Math.random()*30-15))+'px;top:'+(e.clientY-8+(Math.random()*20-10))+'px;font-size:'+(12+Math.random()*10)+'px;animation:fbP .7s ease-out forwards';
       fx.appendChild(p); setTimeout(function(el){return function(){el.remove()}}(p),750);
     }
   });
 })();
 </script>
-<script src="fx.js"></script>
 </body>
 </html>

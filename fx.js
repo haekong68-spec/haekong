@@ -46,7 +46,7 @@ var FX_TRANS_MS    = 800;    // 커지는 등장 길이(ms). 더 느리게 = 숫
     }
     .container, .wrap{ perspective:1300px; }
     .card{ transition:transform .25s ease, box-shadow .25s ease; will-change:transform; }
-    .card.fx-tilting{ box-shadow:var(--shadow-hover); }
+    .fx-tilting{ box-shadow:var(--shadow-hover, 0 16px 36px rgba(31,60,90,.16)); }
     .fx-heart{ position:fixed; z-index:500; pointer-events:none; color:var(--main); transform:translate(-50%,-50%); animation:fxHeart .95s ease-out forwards; }
     @keyframes fxHeart{
       0%{ opacity:0; transform:translate(-50%,-50%) scale(.4); }
@@ -154,17 +154,24 @@ var FX_TRANS_MS    = 800;    // 커지는 등장 길이(ms). 더 느리게 = 숫
       }
     }
     /* 카드 살짝 기울기 (데스크톱 마우스에서만) */
-    if (FX_TILT && mqFine && !mqReduce) {
-      document.querySelectorAll('.card').forEach(function (card) {
-        if (card.dataset.fxTilt) return; card.dataset.fxTilt = '1';
-        card.addEventListener('mousemove', function (e) {
-          var r = card.getBoundingClientRect();
-          var rx = (0.5 - (e.clientY - r.top) / r.height) * 5;
-          var ry = ((e.clientX - r.left) / r.width - 0.5) * 5;
-          card.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
-          card.classList.add('fx-tilting');
-        });
-        card.addEventListener('mouseleave', function () { card.style.transform = ''; card.classList.remove('fx-tilting'); });
+    if (FX_TILT && mqFine && !mqReduce && !window.__fxTiltOn) {
+      window.__fxTiltOn = true;
+      var TILT_SEL = '.card, .item-card, .viewer-card, .notice-item, .up-item, .vod-ph, .d-box';
+      var TILT_DEG = 2.5;                                   /* 감도 (기존 5) */
+      var _tiltEl = null;
+      document.addEventListener('mousemove', function (e) {
+        var card = e.target.closest ? e.target.closest(TILT_SEL) : null;
+        if (_tiltEl && _tiltEl !== card) { _tiltEl.style.transform = ''; _tiltEl.classList.remove('fx-tilting'); _tiltEl = null; }
+        if (!card) return;
+        var r = card.getBoundingClientRect();
+        var rx = (0.5 - (e.clientY - r.top) / r.height) * TILT_DEG;
+        var ry = ((e.clientX - r.left) / r.width - 0.5) * TILT_DEG;
+        card.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+        card.classList.add('fx-tilting');
+        _tiltEl = card;
+      }, { passive: true });
+      document.addEventListener('mouseleave', function () {
+        if (_tiltEl) { _tiltEl.style.transform = ''; _tiltEl.classList.remove('fx-tilting'); _tiltEl = null; }
       });
     }
     /* 프사 톡(이스터에그): 프사를 클릭하면 모양이 펑 */

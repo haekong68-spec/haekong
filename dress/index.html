@@ -121,6 +121,7 @@
     <div class="dress-head"><span style="font-size:22px">👗</span><span class="t">옷장</span></div>
     <div class="dress-sub">새로 올린 옷은 <b>포스터</b>로, 이미 올린 옷은 <b>기존 옷</b>에서 봐요. 이미지를 누르면 크게 볼 수 있어요</div>
     <div class="mode-seg" id="mode-seg">
+      <button class="seg-btn" data-mode="event">🎉 이벤트</button>
       <button class="seg-btn active" data-mode="new">✨ 새 옷 (포스터)</button>
       <button class="seg-btn" data-mode="old">🗂 기존 옷</button>
     </div>
@@ -154,6 +155,7 @@
     { key:'lens',   label:'렌즈' },
   ];
   const LABELS = Object.fromEntries(CATS.map(c => [c.key, c.label]));
+  LABELS.event = '이벤트';   // 이벤트 모드 전용 (분류 탭 없음)
   const PER_PAGE = 9;
 
   /* ★ 새 옷(포스터) / 기존 옷 가르기 = admin "✨ 새 옷으로 올리기" 체크 여부 ★
@@ -187,6 +189,9 @@
   }
 
   function viewItems(){
+    if (curMode === 'event'){
+      return allItems.filter(i => i.category === 'event').slice().sort((a,b)=> new Date(b.created_at||0) - new Date(a.created_at||0)); // 이벤트: 분류 없이 전체 최신순
+    }
     if (curMode === 'new'){
       return allItems.filter(i => i.category === curCat && isNew(i)).slice().sort((a,b)=> new Date(b.created_at||0) - new Date(a.created_at||0)); // 분류별·최신순
     }
@@ -250,11 +255,13 @@
 
   function render(){
     const body = document.getElementById('dress-body');
-    document.getElementById('cat-tabs').style.display = 'flex';   // 새 옷·기존 옷 둘 다 분류 탭 사용
+    document.getElementById('cat-tabs').style.display = (curMode === 'event') ? 'none' : 'flex';   // 이벤트 모드는 분류 탭 없음
 
     const items = viewItems();
     if (!items.length){
-      body.innerHTML = (curMode === 'new')
+      body.innerHTML = (curMode === 'event')
+        ? '<div class="empty"><div class="empty-icon">🎉</div>이벤트 의상이 아직 없어요<br><span style="font-size:12.5px;opacity:.85">admin에서 분류를 "이벤트"로 저장하면 여기 포스터로 떠요</span></div>'
+        : (curMode === 'new')
         ? '<div class="empty"><div class="empty-icon">✨</div>' + (LABELS[curCat]||'') + ' 새 옷이 아직 없어요<br><span style="font-size:12.5px;opacity:.85">admin에서 옷을 추가할 때 "✨ 새 옷으로 올리기"를 체크하면 여기 포스터로 떠요</span></div>'
         : '<div class="empty"><div class="empty-icon">👗</div>' + (LABELS[curCat]||'') + ' 항목이 아직 없어요</div>';
       return;
@@ -263,7 +270,7 @@
     if (curPage > totalPages) curPage = 1;
     const pageItems = items.slice((curPage-1)*PER_PAGE, curPage*PER_PAGE);
 
-    const main = (curMode === 'new') ? posterHTML(pageItems) : gridHTML(pageItems);
+    const main = (curMode === 'old') ? gridHTML(pageItems) : posterHTML(pageItems);   // 이벤트·새 옷=포스터, 기존=그리드
     let pager = '';
     if (totalPages > 1){
       pager = '<div class="dress-pager">';
