@@ -18,7 +18,7 @@
   --main-light:  #BFE4F9;
   --bg:     #F2F6F9;
   --card:   #F7FBFE;
-  --logo:        #1F6FA8;   /* 상단 로고 글자색 (색 바꿀 때 여기도 같이) */
+  --logo:        #151515;   /* 상단 로고 글자색 (색 바꿀 때 여기도 같이) */
   --text:        #20374C;
   --text-soft:   #4d7196;
   --text-mid:    #3d6285;
@@ -373,7 +373,7 @@ body::before{ display:none; }                       /* 하트 장식 제거 (블
 .nav{ background:transparent !important; box-shadow:none !important; border-bottom:none !important;
   backdrop-filter:none !important; }
 body.dark .nav{ background:transparent !important; }
-.nav a.nav-logo{ font-size:clamp(26px,2.4vw,36px) !important; color:var(--main-dark) !important; }
+.nav a.nav-logo{ font-size:clamp(26px,2.4vw,36px) !important; color:var(--logo) !important; }
 .nav a:not(.nav-logo){ font-size:14px; font-weight:700; color:var(--text-soft);
   padding:7px 14px; border-radius:999px; border-bottom:none !important; transition:all .2s; }
 .nav a:not(.nav-logo):hover{ color:var(--main-dark); background:rgba(255,255,255,.75); }

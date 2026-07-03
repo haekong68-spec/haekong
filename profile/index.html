@@ -17,8 +17,16 @@
 body.dark{
   --bg:#0F2032; --sheet:#182C42; --line:rgba(140,200,240,.16);
   --ink:#E8F3FB; --text-soft:#9FC2DC; --main-light:#2E5A80;
+  --main-dark:#8FD2F5;                                   /* 진파랑 → 밝게 (버튼·요일·헤더 가독) */
   background-image:none;
 }
+/* --main-dark 밝힘의 여파 보정 */
+body.dark .badge-date{background:#2E5A80; color:#E8F3FB}
+body.dark .vod-ph{background:linear-gradient(135deg,#2E7FB8,#1F6FA8)}
+body.dark .lbtn{background:transparent}
+body.dark .lbtn:hover{background:#2E5A80}
+body.dark .lbtn.pri{background:var(--main); color:#fff}
+body.dark .dbadge{background:#2E7FB8}
 body.dark .card{box-shadow:0 14px 36px rgba(0,0,0,.4), 0 3px 10px rgba(0,0,0,.25)}
 body.dark .tchip{background:#1F3D5A}
 body.dark .tchip.bad{background:#402832}
@@ -54,7 +62,7 @@ body.ready .wrap{opacity:1}
 /* ── 상단 nav (배경 위) ── */
 .nav{padding:14px 0}
 .nav .nin{max-width:1100px; margin:0 auto; padding:0 20px; display:flex; align-items:center; gap:clamp(14px,2vw,28px)}
-.nav .logo{font-family:'Italiana',serif; font-size:clamp(26px,2.4vw,36px); color:var(--main-dark);
+.nav .logo{font-family:'Italiana',serif; font-size:clamp(26px,2.4vw,36px); color:#151515;
   text-decoration:none; letter-spacing:.03em}
 .nav .pg .t{font-size:15px; font-weight:900; letter-spacing:.28em; color:var(--main-dark)}
 .nav .pg .s{font-size:11px; font-weight:700; color:var(--text-soft); margin-top:2px}
@@ -346,7 +354,7 @@ function closeInquiry(){document.getElementById('inqModal').classList.remove('op
 function sendInquiry(){
   var t=document.getElementById('inqText').value.trim();
   if(!t){alert('내용을 적어주세요!');return}
-  if(window.dbInsert){ window.dbInsert('inquiry',{content:t}).then(function(){alert('전송됐어요! 💙');closeInquiry();document.getElementById('inqText').value='';}); }
+  if(typeof insertRow==='function'){ insertRow('inquiries',{message:t}).then(function(ok){alert(ok?'전송됐어요! 💙':'전송 실패… 잠시 후 다시 시도해줘요');if(ok){closeInquiry();document.getElementById('inqText').value='';}}); }
   else{ alert('전송됐어요! 💙'); closeInquiry(); document.getElementById('inqText').value=''; }
 }
 (function(){
@@ -369,7 +377,78 @@ window.addEventListener('load',function(){document.body.classList.add('ready')})
 setTimeout(function(){document.body.classList.add('ready')},1200);
 
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script>
+/* ── Supabase → 페이지 반영 ── */
+(async function(){
+  try{
+    const { data: rows } = await db.from('profile').select('data').eq('id', 1);
+    const d = (rows && rows[0] && rows[0].data) || {};
+    const set = (k) => { const v=(d[k]||'').trim(); if(v) document.querySelectorAll('[data-hook="'+k+'"]').forEach(e=>e.textContent=v); };
+    ['info-name','info-catchphrase','info-birth','info-debut','info-gender','info-fandom','info-content','info-tags','msg'].forEach(set);
+
+    /* 아바타·SOOP */
+    const sid=(d['soop-id']||'').trim();
+    const av=document.getElementById('avatarWrap');
+    if((d.avatar||'').trim()) av.src=d.avatar.trim();
+    else if(sid) av.src='https://profile.img.sooplive.co.kr/LOGO/'+sid.slice(0,2)+'/'+sid+'/'+sid+'.jpg';
+
+    /* 링크 */
+    const setHref=(sel,url)=>{ const e=document.querySelector(sel); if(e&&(url||'').trim()) e.href=url.trim(); };
+    setHref('a.lbtn.pri', d['link-soop'] || (sid?'https://www.sooplive.com/station/'+sid:''));
+    setHref('a[href*="meloming"]', d['link-song']);
+    setHref('a[href*="fancim"]', d['link-fancim']);
+
+    /* 방송 요일 (admin 체크 = 값 0~6) */
+    if((d.days||'').trim()!==''){
+      const on=String(d.days).split(',').map(s=>s.trim());
+      for(let i=0;i<7;i++){
+        const e=document.querySelector('[data-hook="day-'+i+'"]');
+        if(e) e.textContent = on.includes(String(i)) ? '방송 🩵' : '휴방';
+      }
+    }
+
+    /* 데뷔 D-Day: 저장값(YYYY.MM.DD/–/·) 파싱해 재계산 */
+    const dm=String(d['info-debut']||'').match(/(\d{4})[.\-\/년\s]+(\d{1,2})[.\-\/월\s]+(\d{1,2})/);
+    if(dm){
+      const t=new Date(); t.setHours(0,0,0,0);
+      const dd=new Date(+dm[1], +dm[2]-1, +dm[3]);
+      const n=Math.round((dd-t)/86400000), el=document.getElementById('debutBadge');
+      if(el) el.textContent = n>0 ? 'D-'+n : (n===0 ? 'D-DAY' : 'D+'+(-n));
+    }
+
+    /* 다시보기 VOD */
+    const { data: vods } = await db.from('original_songs').select('*').order('created_at', { ascending:false });
+    if(vods && vods.length){
+      document.getElementById('ovod-grid').innerHTML = vods.map(v =>
+        '<div style="aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000">'+
+        '<iframe src="https://vod.sooplive.co.kr/player/'+encodeURIComponent(v.vod_id||'')+'/embed" '+
+        'style="width:100%;height:100%;border:0" allowfullscreen loading="lazy" title="'+(v.title||'').replace(/"/g,'&quot;')+'"></iframe></div>'
+      ).join('');
+    }
+  }catch(e){ /* 오프라인/키 미설정 시 기본값 유지 */ }
+  document.body.classList.add('ready');
+})();
+</script>
 <script src="../fx.js"></script>
+<script>
+/* 달콩·프사 통통 + 조개 펑 (fx.js 유무 무관) */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var st=document.createElement('style');
+  st.textContent='@keyframes hkB{0%,100%{transform:none}30%{transform:translateY(-9px) scale(1.05)}60%{transform:translateY(2px)}}';
+  document.head.appendChild(st);
+  ['avatarWrap','dalkong'].forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    el.style.cursor='pointer';
+    el.addEventListener('click',function(e){
+      el.style.animation='none'; void el.offsetWidth; el.style.animation='hkB .55s ease';
+      if(typeof window.fxHearts==='function') window.fxHearts(e.clientX, e.clientY, 8);
+    });
+  });
+})();
+</script>
 <script>
 (function(){
   if(typeof window.fxHearts==='function') return;

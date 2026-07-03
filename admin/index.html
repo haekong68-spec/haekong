@@ -123,12 +123,21 @@
     <div class="card">
       <div class="card-title">🔗 관련 링크</div>
       <div class="form-field"><label class="input-label">SOOP URL</label><input class="input" id="f-link-soop" type="url" placeholder="https://"></div>
+      <div class="form-field"><label class="input-label">노래책 주소</label><input class="input" id="f-link-song" type="text" placeholder="https://meloming.com/channel/..."></div>
+      <div class="form-field"><label class="input-label">팬심 주소</label><input class="input" id="f-link-fancim" type="text" placeholder="https://fancim.me/celeb/..."></div>
       <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
     </div>
   </div>
 
   <!-- 공지 탭 -->
   <div class="tab-panel" id="tab-notice">
+    <div class="card">
+      <div class="card-title">🏠 메인 페이지</div>
+      <div class="form-field"><label class="input-label">메인 스토리 문구 (줄바꿈 = 엔터)</label><textarea class="input" id="f-main-story" rows="4"></textarea></div>
+      <div class="form-field"><label class="input-label">메인 일러스트 URL (비우면 내장 이미지)</label><input class="input" id="f-main-art" type="text" placeholder="https://... (2560×1024 권장)"></div>
+      <button class="btn" onclick="saveLocalProfile()">💾 저장</button>
+    </div>
+
     <div class="card">
       <div class="card-title">공지 추가</div>
       <div class="form-field"><label class="input-label">제목 *</label><input class="input" id="noti-title"></div>
@@ -329,7 +338,9 @@
     'avatar','soop-id',
     'info-name','info-catchphrase','info-tags','info-fandom',
     'info-birth','info-debut','info-gender','info-content',
-    'msg','days','link-soop'
+    'msg','days',
+    'link-soop','link-song','link-fancim',
+    'main-story','main-art'
   ];
 
   function tryLogin() {
@@ -636,21 +647,6 @@
   }
 
   // ── 일기 ──
-  async function loadDiary() {
-    const data = await fetchAll('diary', { order: 'diary_date', asc: false });
-    const t = document.getElementById('diary-list');
-    if (!data.length) { t.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#ccc;padding:20px">없음</td></tr>'; return; }
-    t.innerHTML = data.map(d => `<tr><td>${d.diary_date||'-'}</td><td>${d.mood}</td><td>${d.title}</td><td><button class="delete-btn" onclick="del('diary',${d.id},loadDiary)">🗑</button></td></tr>`).join('');
-  }
-  async function addDiary() {
-    const title = document.getElementById('diary-title').value.trim();
-    if (!title) { showToast('❗ 제목 필수!'); return; }
-    const images = document.getElementById('diary-image-url').value.split(/[\n,]+/).map(s=>s.trim()).filter(Boolean);
-    const image_url = images[0] || null;
-    const ok = await insertRow('diary', { title, content: document.getElementById('diary-content').value, mood: document.getElementById('diary-mood').value, diary_date: document.getElementById('diary-date').value, image_url, images });
-    if (ok) { showToast('✅ 추가!'); ['diary-title','diary-content','diary-date','diary-image-url'].forEach(id=>document.getElementById(id).value=''); loadDiary(); }
-    else showToast('❌ 실패');
-  }
 
   async function del(table, id, fn) {
     if (!confirm('정말 삭제?')) return;
@@ -660,10 +656,6 @@
 
   // ── 노래 ──
   let songData = [];
-  async function loadSong() {
-    songData = await fetchAll('songs', { order: 'id', asc: true });
-    renderSongs();
-  }
   function renderSongs() {
     const q = (document.getElementById('song-search')?.value || '').trim().toLowerCase();
     const list = songData.filter(s => !q || (s.title||'').toLowerCase().includes(q) || (s.artist||'').toLowerCase().includes(q));
@@ -673,15 +665,6 @@
       const d = parseInt(s.difficulty)||0; let stars=''; for(let k=1;k<=d;k++) stars+='⭐';
       return `<tr><td>${s.title}</td><td>${s.artist||'-'}</td><td><span class="badge badge-pink">${s.genre||'기타'}</span></td><td>${stars||'-'}</td><td><button class="delete-btn" onclick="del('songs',${s.id},loadSong)">🗑</button></td></tr>`;
     }).join('');
-  }
-  async function addSong() {
-    const title = document.getElementById('song-title').value.trim();
-    if (!title) { showToast('❗ 제목 필수!'); return; }
-    let diff = parseInt(document.getElementById('song-diff').value)||3;
-    diff = Math.min(5, Math.max(1, diff));
-    const ok = await insertRow('songs', { title, artist: document.getElementById('song-artist').value.trim(), genre: document.getElementById('song-genre').value, difficulty: diff });
-    if (ok) { showToast('✅ 추가!'); document.getElementById('song-title').value=''; document.getElementById('song-artist').value=''; loadSong(); }
-    else showToast('❌ 실패');
   }
 
   // ── 문의 ──

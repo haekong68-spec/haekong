@@ -166,7 +166,7 @@ var FX_TRANS_MS    = 800;    // 커지는 등장 길이(ms). 더 느리게 = 숫
         var r = card.getBoundingClientRect();
         var rx = (0.5 - (e.clientY - r.top) / r.height) * TILT_DEG;
         var ry = ((e.clientX - r.left) / r.width - 0.5) * TILT_DEG;
-        card.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+        card.style.transform = 'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
         card.classList.add('fx-tilting');
         _tiltEl = card;
       }, { passive: true });
