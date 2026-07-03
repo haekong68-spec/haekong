@@ -27,6 +27,7 @@
     .cal-date { font-size:13px; font-weight:700; color:var(--text-mid); padding:1px 3px; }
     .cal-cell:nth-child(7n+1) .cal-date { color:#e05; }
     .cal-cell:nth-child(7n) .cal-date { color:#4a9; }
+    .cal-cell.today .cal-date { color:#fff !important; }   /* 요일색보다 우선 — 토/일 당일 숫자 가림 버그 */
     .ev { font-size:10px; padding:3px 6px; border-radius:6px; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; max-width:100%; }
     /* 색상 팔레트 */
     .c-green  { background:#d6f0e4; color:#1f7a52; }
