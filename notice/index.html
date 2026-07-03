@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>해콩 · 공지</title>
-  <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/ue/ueeeeeee81/ueeeeeee81.jpg">
+  <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/ya/yami875/yami875.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <style>
@@ -41,14 +41,14 @@
 </head>
 <body>
 <nav class="nav"><div class="nav-inner">
-  <a href="../index.html" class="brand"><span class="mark"><span>🦦</span><img src="../avatar.gif" alt="" referrerpolicy="no-referrer" onerror="this.remove()"></span><span class="brand-tx"><span class="bn">해콩</span><span class="bs">HAEKONG · OCEAN</span></span></a>
-  <a href="../index.html">홈</a>
+  <a href="../index.html" class="nav-logo">HAEKONG</a>
+  <a href="../index.html">메인</a>
   <a href="../profile/">프로필</a>
   <a href="index.html" class="active">공지</a>
   <a href="../schedule/">일정</a>
-  <a href="../diary/">일기</a>
-  <a href="../dress/">옷장</a>
   <a href="../work/">업보</a>
+  <a href="../dress/">옷장</a>
+  <button class="theme-switch" id="themeSwitch" type="button" aria-label="다크모드 전환"><span class="knob" id="themeKnob">🌙</span></button>
 </div></nav>
 
 <div class="container stagger">
@@ -99,6 +99,20 @@
     }).join('');
   }
   init();
+</script>
+<script>
+(function(){
+  if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+  var sw = document.getElementById('themeSwitch');
+  var knob = document.getElementById('themeKnob');
+  function refresh(){ if(knob) knob.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙'; }
+  if (sw) sw.addEventListener('click', function(){
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    refresh();
+  });
+  refresh();
+})();
 </script>
 <!-- 공통 연출(입자·클릭·기울기) -->
 <script src="../fx.js"></script>

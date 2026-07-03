@@ -16,9 +16,9 @@
    ============================================================ */
 
 /* ─────────── 설정 (이 사람에 맞게 바꾸세요) ─────────── */
-var FX_FLOAT = ['○','✧','○','✦','○'];   // 떠다니는 입자 모양 (동그라미 비중↑)
-var FX_CLICK = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PHBhdGggZmlsbD0iI0NDRDZERCIgZD0iTTI5LjA0OSA3LjAzM2MtLjA3LS4wNy0uMTQxLS4xMjYtLjIxMS0uMTg4LTEuMDgtMS4wODctMi40OTctMS41NjQtNC4wMDgtMS4zNzNsLTMuODEyLjQ4M2MtLjM4Mi0zLjAwMy0yLjI1LTQuNDQ2LTQuMzUxLTQuMTgxbC00LjI0LjUzNkMxMi4wNzUuNzY3IDExLjAxMS4wMzQgOS44MjcuMTg1TDUuMDMzLjc5QzMuNzEuOTU4IDIuNzczIDIuNDM4IDIuOTQgNC4wOTdsLjYwNiA2LjAwN2MuMTUyIDEuNTAxIDEuNDI1IDIuNTkxIDIuNDAzIDIuNjkzbC41MTQgNS4wOTNjLjI1OCAyLjU1MyAyLjUwOSA0LjM2NSA0LjExNyA0LjM4bC40OTggNC45MjZjLjE2NCAxLjYyMi45MjggMy4wMjcgMS45MTcgNC4wNjMuMjMuMzM5LjQ3MS42NTYuNzM3LjkyMiA0LjQyMyA0LjQyMyAxMi4xODMgNS4wNjQgMTYuNjA3LjY0IDQuNDItNC40MjIgMy4xMzMtMjEuMzY1LTEuMjktMjUuNzg4eiIvPjxwYXRoIGZpbGw9IiM2Njc1N0YiIGQ9Ik0zMC42MDkgMTQuMzk2Yy44MDEgMi4zNzEgMS41NDUgMTEuNTctMS41MzIgMTUuNTQzLTMuMDc5IDMuOTcyLTguMDQzLTEuMzg5LTUuMzEyLTYuMjA1IDIuNzMtNC44MTQgNi4wMzYtMTEuNzMzIDYuODQ0LTkuMzM4eiIvPjxwYXRoIGZpbGw9IiM5OUFBQjUiIGQ9Ik0yMS4wMTggNS45NTRjLjAwOS4wNzIuMDI4LjEzMy4wMzYuMjA2LjMxOCAzLjE1NC03LjY4NiAxNS43OTktMTAuMjA0IDE2LjExOS0uMDg1LjAxMS0uMTgxLS4wMDgtLjI3MS0uMDA4bC40MDEgMy45NzFjMy42OTQtMS45MzYgMTIuNDEyLTE1LjcxIDEzLjA4Ny0yMC42NzNsLTMuMDQ5LjM4NXptLTguNTktMy42NDVjLjA0Mi4xODIuMDc5LjM2OS4xLjU3NC4xOTcgMS45NDItNC43MzIgOS43MjUtNi4yOCA5LjkyMy0uMDk0LjAxMi0uMTk2LjAwMS0uMjk5LS4wMDlsLjM1MyAzLjUwMmMyLjc4LTIuMDk2IDguMDkzLTEwLjQ4OSA5LjA5NC0xNC4zNjVsLTIuOTY4LjM3NXoiLz48L3N2Zz4=';   // 클릭/프사톡 = 조개 SVG(이미지)
-var FX_COUNT = 16;                            // 떠다니는 입자 개수 (많을수록 무거움)
+var FX_FLOAT = ['○','✧','○','✦','○','✧','○','✦','○'];   // 떠다니는 입자 모양
+var FX_CLICK = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMCIgaGVpZ2h0PSIyOCIgdmlld0JveD0iMCAwIDMwIDI4Ij48cGF0aCBkPSJNMTUgMiBDOCAyIDMgOCAzIDE1IHEwIDYgMTIgMTEgcTEyIC01IDEyIC0xMSBDMjcgOCAyMiAyIDE1IDIgeiIgZmlsbD0iI0E5RDhGNCIgc3Ryb2tlPSIjM0U5QkQ0IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNMTUgMyBMMTUgMjUgTTkgNC41IEwxMiAyNCBNMjEgNC41IEwxOCAyNCIgc3Ryb2tlPSIjM0U5QkQ0IiBzdHJva2Utd2lkdGg9IjEuNiIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+';                           // 클릭/프사톡 모양. 글자·이모지 또는 이미지(data:… / https://… .svg·.png)도 가능
+var FX_COUNT = 14;                            // 떠다니는 입자 개수 (많을수록 무거움)
 var FX_TILT  = true;                          // 카드 마우스오버 살짝 기울기 (끄려면 false)
 
 /* ─ 로딩화면 + 페이지 전환(커지는 등장) — 보통 그대로 두세요 ─ */
@@ -180,11 +180,11 @@ var FX_TRANS_MS    = 800;    // 커지는 등장 길이(ms). 더 느리게 = 숫
     for (var i = 0; i < n; i++) {
       var h = document.createElement('span'); h.className = 'fx-heart';
       var _sz = (14 + Math.random() * 10);
-      if (/^data:|^https?:\/\//i.test(FX_CLICK)) {
+      if (/^data:|^https?:\/\//i.test(FX_CLICK)) {           // 이미지(SVG/PNG/gif 등)면 배경이미지로
         h.style.width = _sz.toFixed(0) + 'px'; h.style.height = _sz.toFixed(0) + 'px';
         h.style.backgroundImage = 'url("' + FX_CLICK + '")';
         h.style.backgroundSize = 'contain'; h.style.backgroundRepeat = 'no-repeat'; h.style.backgroundPosition = 'center';
-      } else { h.textContent = FX_CLICK; h.style.fontSize = _sz.toFixed(0) + 'px'; }
+      } else { h.textContent = FX_CLICK; h.style.fontSize = _sz.toFixed(0) + 'px'; }  // 글자/이모지면 텍스트로
       h.style.left = x + 'px'; h.style.top = y + 'px';
       h.style.setProperty('--hx', (Math.random() * 64 - 32).toFixed(0) + 'px');
       h.style.animationDelay = (Math.random() * 0.12).toFixed(2) + 's';

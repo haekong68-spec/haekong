@@ -51,8 +51,6 @@
       <button class="tab-btn" onclick="switchTab('notice',this)">📢 공지</button>
       <button class="tab-btn" onclick="switchTab('schedule',this)">📅 일정</button>
       <button class="tab-btn" onclick="switchTab('work',this)">⚡ 업보</button>
-      <button class="tab-btn" onclick="switchTab('diary',this)">📝 일기</button>
-      <button class="tab-btn" onclick="switchTab('song',this)">🎵 노래</button>
       <button class="tab-btn" onclick="switchTab('dress',this)">👗 옷장</button>
       <button class="tab-btn" onclick="switchTab('inquiry',this)">✉️ 문의</button>
     </div>
@@ -69,7 +67,7 @@
       </div>
       <div class="form-field">
         <label class="input-label">SOOP 아이디 (위 링크를 비우면 이걸로 자동 연동)</label>
-        <input class="input" id="f-soop-id" type="text" placeholder="ueeeeeee81" oninput="previewAvatar()">
+        <input class="input" id="f-soop-id" type="text" placeholder="yami875" oninput="previewAvatar()">
       </div>
       <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
         <div style="width:64px;height:64px;border-radius:50%;overflow:hidden;background:var(--main-light);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px">
@@ -81,40 +79,20 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-title">⭐ 히어로 인사 · 문구</div>
-      <div class="form-field"><label class="input-label">히어로 인사말 (상단 큰 글씨)</label><textarea class="input" id="f-hero-greet" rows="2"></textarea></div>
-      <div class="form-field"><label class="input-label">히어로 하단 문구 (줄바꿈=엔터)</label><textarea class="input" id="f-hero-quote" rows="3"></textarea></div>
+      <div class="card-title">⭐ 소개 (프로필 "소개" 칸)</div>
+      <div class="form-field"><label class="input-label">하고픈 말</label><textarea class="input" id="f-msg" rows="3"></textarea></div>
       <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
     </div>
     <div class="card">
       <div class="card-title">해콩 특징</div>
       <div class="form-field"><label class="input-label">이름</label><input class="input" id="f-info-name" type="text"></div>
+      <div class="form-field"><label class="input-label">한마디로</label><input class="input" id="f-info-catchphrase" type="text"></div>
       <div class="form-field"><label class="input-label">성격 태그 (쉼표 구분)</label><input class="input" id="f-info-tags" type="text"></div>
-      <div class="form-field"><label class="input-label">MBTI</label><input class="input" id="f-info-mbti" type="text"></div>
+      <div class="form-field"><label class="input-label">성별</label><input class="input" id="f-info-gender" type="text"></div>
       <div class="form-field"><label class="input-label">팬닉</label><input class="input" id="f-info-fandom" type="text"></div>
-      <div class="form-field"><label class="input-label">데뷔 (예: 26.7.10)</label><input class="input" id="f-info-debut" type="text"></div>
-      <div class="form-field"><label class="input-label">생일 표시용 (예: 7.17)</label><input class="input" id="f-info-birth" type="text"></div>
-      <div class="form-field"><label class="input-label">생일 D-Day용 (MM-DD, 예: 07-17)</label><input class="input" id="f-birthday" type="text" placeholder="07-17"></div>
-      <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
-    </div>
-    <div class="card">
-      <div class="card-title">💗 좋아하는 것 · 싫어하는 것</div>
-      <div class="form-grid">
-        <div class="form-field"><label class="input-label">좋아 1</label><input class="input" id="f-like1" type="text"></div>
-        <div class="form-field"><label class="input-label">좋아 2</label><input class="input" id="f-like2" type="text"></div>
-        <div class="form-field"><label class="input-label">좋아 3</label><input class="input" id="f-like3" type="text"></div>
-        <div class="form-field"><label class="input-label">좋아 4</label><input class="input" id="f-like4" type="text"></div>
-        <div class="form-field"><label class="input-label">싫어 1</label><input class="input" id="f-dislike1" type="text"></div>
-        <div class="form-field"><label class="input-label">싫어 2</label><input class="input" id="f-dislike2" type="text"></div>
-        <div class="form-field"><label class="input-label">싫어 3</label><input class="input" id="f-dislike3" type="text"></div>
-      </div>
-      <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
-    </div>
-    <div class="card">
-      <div class="card-title">🖼 히어로 · 팬캐릭터 이미지</div>
-      <div class="form-field"><label class="input-label">히어로 캐릭터 이미지 URL (비우면 기본 이미지)</label><input class="input" id="f-hero-char" type="url" placeholder="https://.../image.jpg"></div>
-      <div class="form-field"><label class="input-label">팬캐릭터 이미지 URL</label><input class="input" id="f-fan-char" type="url" placeholder="https://.../image.png"></div>
-      <div style="font-size:11px;color:var(--text-soft);margin-bottom:8px">핫링크는 SOOP 비공개 게시판 이미지 주소 권장.</div>
+      <div class="form-field"><label class="input-label">생일 (예: 01.18)</label><input class="input" id="f-info-birth" type="text"></div>
+      <div class="form-field"><label class="input-label">데뷔 (예: 2026.07.10)</label><input class="input" id="f-info-debut" type="text"></div>
+      <div class="form-field"><label class="input-label">콘텐츠</label><input class="input" id="f-info-content" type="text"></div>
       <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
     </div>
     <div class="card">
@@ -141,6 +119,11 @@
         <div class="form-field full" style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="addOriginalSong()">+ 추가</button></div>
       </div>
       <div id="os-list" style="margin-top:6px"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔗 관련 링크</div>
+      <div class="form-field"><label class="input-label">SOOP URL</label><input class="input" id="f-link-soop" type="url" placeholder="https://"></div>
+      <div style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="saveLocalProfile()">저장 ♥</button></div>
     </div>
   </div>
 
@@ -299,66 +282,19 @@
   </div>
 
   <!-- 일기 탭 -->
-  <div class="tab-panel" id="tab-diary">
-    <div class="card">
-      <div class="card-title">일기 추가</div>
-      <div class="form-grid">
-        <div class="form-field"><label class="input-label">제목 *</label><input class="input" id="diary-title"></div>
-        <div class="form-field"><label class="input-label">기분 이모지</label>
-          <select class="input" id="diary-mood">
-            <option>😊</option><option>😄</option><option>🥰</option><option>😢</option>
-            <option>😡</option><option>🤔</option><option>😴</option><option>🎉</option>
-            <option>💪</option><option>🌸</option>
-          </select>
-        </div>
-        <div class="form-field full"><label class="input-label">내용</label><textarea class="input" id="diary-content" rows="5"></textarea></div>
-        <div class="form-field full"><label class="input-label">이미지 링크 (여러 개면 줄바꿈으로 붙여넣기)</label><textarea id="diary-image-url" class="input" rows="2" placeholder="https://... (한 줄에 하나씩)"></textarea></div>
-        <div class="form-field full" style="font-size:11px;color:var(--text-soft);margin-top:-4px">💡 SOOP에 <b>비공개 게시판</b>을 만들어 이미지를 올린 뒤 → 이미지 <b>우클릭 → "이미지 주소 복사"</b> → 위 칸에 붙여넣기 (글 주소 말고 <b>이미지 주소</b>)</div>
-        <div class="form-field"><label class="input-label">날짜</label><input class="input" id="diary-date" type="date"></div>
-        <div class="form-field" style="display:flex;align-items:flex-end"><button class="btn btn-primary" onclick="addDiary()">+ 추가</button></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">등록된 일기</div>
-      <div class="table-wrap"><table><thead><tr><th>날짜</th><th>기분</th><th>제목</th><th>삭제</th></tr></thead>
-      <tbody id="diary-list"><tr><td colspan="4"><div class="spinner"></div></td></tr></tbody></table></div>
-    </div>
-  </div>
-
   <!-- 노래 탭 -->
-  <div class="tab-panel" id="tab-song">
-    <div class="card">
-      <div class="card-title">곡 추가</div>
-      <div class="form-grid">
-        <div class="form-field"><label class="input-label">장르</label>
-          <select class="input" id="song-genre"><option>K-Pop</option><option>J-Pop</option><option>Pop</option><option>애교송</option><option>기타</option></select>
-        </div>
-        <div class="form-field"><label class="input-label">아티스트</label><input class="input" id="song-artist" placeholder="아티스트명"></div>
-        <div class="form-field"><label class="input-label">제목 *</label><input class="input" id="song-title" placeholder="곡명"></div>
-        <div class="form-field"><label class="input-label">난이도 (1~5)</label><input class="input" id="song-diff" type="number" min="1" max="5" value="3"></div>
-        <div class="form-field full" style="display:flex;justify-content:flex-end"><button class="btn btn-primary" onclick="addSong()">+ 추가</button></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">노래 목록</div>
-      <input class="input" id="song-search" placeholder="🔍 검색..." style="margin-bottom:12px" oninput="renderSongs()">
-      <div class="table-wrap"><table><thead><tr><th>제목</th><th>아티스트</th><th>장르</th><th>난이도</th><th>삭제</th></tr></thead>
-      <tbody id="song-list"><tr><td colspan="5"><div class="spinner"></div></td></tr></tbody></table></div>
-    </div>
-  </div>
-
   <!-- 옷장 탭 -->
   <div class="tab-panel" id="tab-dress">
     <div class="card">
       <div class="card-title">👗 옷장 항목 추가</div>
       <div class="form-grid">
         <div class="form-field"><label class="input-label">분류</label>
-          <select class="input" id="dr-cat"><option value="event">이벤트</option><option value="newclothes">새옷</option><option value="oldclothes">기존옷</option></select>
+          <select class="input" id="dr-cat"><option value="hair">헤어</option><option value="outfit">의상</option><option value="lens">렌즈</option></select>
         </div>
         <div class="form-field"><label class="input-label">순서 (작을수록 앞 · 비우면 맨 뒤)</label>
           <input class="input" id="dr-order" type="number" min="0" placeholder="비워두면 맨 뒤">
         </div>
-        <div class="form-field full"><label class="input-label">이름 *</label><input class="input" id="dr-name" placeholder="예: 새 여름 의상"></div>
+        <div class="form-field full"><label class="input-label">이름 *</label><input class="input" id="dr-name" placeholder="예: 기본 헤어"></div>
         <div class="form-field full"><label class="input-label">설명 (선택)</label><input class="input" id="dr-desc" placeholder="짧은 설명"></div>
         <div class="form-field full"><label class="input-label">이미지 링크 (이미지 주소 붙여넣기)</label><input type="url" id="dr-img-url" class="input" placeholder="https://... 이미지 주소"></div>
         <div class="form-field full" style="font-size:11px;color:var(--text-soft);margin-top:-4px">💡 SOOP <b>비공개 게시판</b>에 이미지 올린 뒤 → <b>우클릭 → "이미지 주소 복사"</b> → 위 칸에 붙여넣기. 권장 크기 <b>세로 3:4 (900×1200px)</b></div>
@@ -381,19 +317,19 @@
   </div>
 
 </div>
-<footer>© 2026 해콩 관리자 ♥</footer>
+<footer>© 2026 HAEKONG 관리자 ♥</footer>
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="../supabase.js"></script>
 <script>
-  const ADMIN_PASSWORD = '1234';
+  const ADMIN_PASSWORD = '{{관리자비밀번호}}';
 
   const profileKeys = [
     'avatar','soop-id',
-    'info-name','info-tags','info-mbti','info-fandom','info-debut','info-birth','birthday',
-    'like1','like2','like3','like4','dislike1','dislike2','dislike3','days',
-    'hero-greet','hero-quote','hero-char','fan-char'
+    'info-name','info-catchphrase','info-tags','info-fandom',
+    'info-birth','info-debut','info-gender','info-content',
+    'msg','days','link-soop'
   ];
 
   function tryLogin() {
@@ -401,7 +337,7 @@
       document.getElementById('loginOverlay').style.display = 'none';
       document.getElementById('adminBody').style.display = 'flex';
       loadProfileFields();
-      loadNotice(); loadSchedule(); loadWork(); loadDiary(); loadSong(); loadDress(); loadInquiry(); loadOriginalSongs();
+      loadNotice(); loadSchedule(); loadWork(); loadDress(); loadInquiry(); loadOriginalSongs();
     } else {
       document.getElementById('loginErr').textContent = '비밀번호가 틀렸어요 >﹏<';
     }
@@ -496,9 +432,9 @@
     const status = document.getElementById('upload-status');
     status.textContent = '업로드 중...';
     const ext = file.name.split('.').pop();
-    const { data, error } = await db.storage.from('images').upload('profile.' + ext, file, { upsert: true });
+    const { data, error } = await db.storage.from('{{버킷이름}}').upload('profile.' + ext, file, { upsert: true });
     if (error) { status.textContent = '❌ 업로드 실패: ' + error.message; return; }
-    const { data: u } = db.storage.from('images').getPublicUrl('profile.' + ext);
+    const { data: u } = db.storage.from('{{버킷이름}}').getPublicUrl('profile.' + ext);
     const url = u.publicUrl + '?t=' + Date.now();
     let saved = {};
     try {
@@ -789,7 +725,7 @@
   // ── 옷장 ──
   let dressCache = [];
   let dressFilter = 'all';   // 'all' | 'new'(새 옷/포스터) | 'old'(기존)
-  const DRESS_CATS = [['event','이벤트'],['newclothes','새옷'],['oldclothes','기존옷']];   // 관리자 목록의 분류·순서 (분류를 바꿀 땐 위 select 옵션 + 옷장 페이지 탭도 함께 수정)
+  const DRESS_CATS = [['hair','헤어'],['outfit','의상'],['lens','렌즈']];   // 관리자 목록의 분류·순서 (분류를 바꿀 땐 위 select 옵션 + 옷장 페이지 탭도 함께 수정)
   const dressByOrder = (a,b)=> ((a.sort_order||0)-(b.sort_order||0)) || (new Date(a.created_at)-new Date(b.created_at));
   function hasNew(d){
     return (d.badges||[]).some(function(b){ var l=(b&&(b.label!=null?b.label:b))||''; return String(l).trim().toUpperCase()==='NEW'; });

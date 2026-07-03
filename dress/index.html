@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>해콩 · 옷장</title>
-  <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/ue/ueeeeeee81/ueeeeeee81.jpg">
+  <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/ya/yami875/yami875.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <style>
@@ -14,6 +14,11 @@
     .dress-sub { font-size:13px; color:var(--text-soft); margin-bottom:16px; line-height:1.6; }
 
     /* ── 모드 토글 (새 옷 / 기존 옷) ── */
+    .mode-seg { display:inline-flex; background:var(--main-light); border-radius:999px; padding:4px; gap:4px; margin-bottom:16px; }
+    .seg-btn { border:none; background:transparent; color:var(--main-dark); font-size:14px; font-weight:700; padding:9px 18px; border-radius:999px; cursor:pointer; transition:all var(--transition); white-space:nowrap; }
+    .seg-btn:hover { color:var(--main); }
+    .seg-btn.active { background:var(--main); color:#fff; box-shadow:var(--shadow); }
+    body.dark .seg-btn.active { color:#fff; }
 
     /* ── 분류 탭 (새 옷·기존 옷 둘 다 사용) ── */
     .cat-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
@@ -101,20 +106,24 @@
 </head>
 <body>
 <nav class="nav"><div class="nav-inner">
-  <a href="../index.html" class="brand"><span class="mark"><span>🦦</span><img src="../avatar.gif" alt="" referrerpolicy="no-referrer" onerror="this.remove()"></span><span class="brand-tx"><span class="bn">해콩</span><span class="bs">HAEKONG · OCEAN</span></span></a>
-  <a href="../index.html">홈</a>
+  <a href="../index.html" class="nav-logo">HAEKONG</a>
+  <a href="../index.html">메인</a>
   <a href="../profile/">프로필</a>
   <a href="../notice/">공지</a>
   <a href="../schedule/">일정</a>
-  <a href="../diary/">일기</a>
-  <a href="index.html" class="active">옷장</a>
   <a href="../work/">업보</a>
+  <a href="index.html" class="active">옷장</a>
+  <button class="theme-switch" id="themeSwitch" type="button" aria-label="다크모드 전환"><span class="knob" id="themeKnob">🌙</span></button>
 </div></nav>
 
 <div class="container stagger">
   <div class="card">
     <div class="dress-head"><span style="font-size:22px">👗</span><span class="t">옷장</span></div>
-    <div class="dress-sub">분류를 눌러 옷을 구경하세요. 이미지를 누르면 크게 볼 수 있어요</div>
+    <div class="dress-sub">새로 올린 옷은 <b>포스터</b>로, 이미 올린 옷은 <b>기존 옷</b>에서 봐요. 이미지를 누르면 크게 볼 수 있어요</div>
+    <div class="mode-seg" id="mode-seg">
+      <button class="seg-btn active" data-mode="new">✨ 새 옷 (포스터)</button>
+      <button class="seg-btn" data-mode="old">🗂 기존 옷</button>
+    </div>
     <div class="cat-tabs" id="cat-tabs"></div>
     <div id="dress-body"><div class="spinner"></div></div>
   </div>
@@ -140,9 +149,9 @@
 
   // ── 분류 (이름·순서를 여기서 바꾸면 끝. admin select 옵션 + admin DRESS_CATS도 같은 값으로 맞추기) ──
   const CATS = [
-    { key:'event',      label:'이벤트' },
-    { key:'newclothes', label:'새옷' },
-    { key:'oldclothes', label:'기존옷' },
+    { key:'hair',   label:'헤어' },
+    { key:'outfit', label:'의상' },
+    { key:'lens',   label:'렌즈' },
   ];
   const LABELS = Object.fromEntries(CATS.map(c => [c.key, c.label]));
   const PER_PAGE = 9;
@@ -166,20 +175,29 @@
       const { data } = await db.from('dress_items').select('*').order('sort_order').order('created_at');
       allItems = data || [];
     } catch(e) { allItems = []; }
+    document.querySelectorAll('#mode-seg .seg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        curMode = btn.dataset.mode; curPage = 1;
+        document.querySelectorAll('#mode-seg .seg-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === curMode));
+        buildTabs(); render();
+      });
+    });
     buildTabs();
     render();
   }
 
   function viewItems(){
-    // 토글 제거: 분류별 전체를 최신순으로
-    return allItems.filter(i => i.category === curCat).slice().sort((a,b)=> new Date(b.created_at||0) - new Date(a.created_at||0));
+    if (curMode === 'new'){
+      return allItems.filter(i => i.category === curCat && isNew(i)).slice().sort((a,b)=> new Date(b.created_at||0) - new Date(a.created_at||0)); // 분류별·최신순
+    }
+    return allItems.filter(i => i.category === curCat && !isNew(i));   // 기존 옷: 분류별
   }
 
   function buildTabs(){
     const wrap = document.getElementById('cat-tabs');
     wrap.innerHTML = '';
     CATS.forEach(c => {
-      const cnt = allItems.filter(i => i.category === c.key).length;
+      const cnt = allItems.filter(i => i.category === c.key && (curMode === 'new' ? isNew(i) : !isNew(i))).length;
       const b = document.createElement('button');
       b.className = 'cat-tab' + (c.key === curCat ? ' active' : '');
       b.dataset.cat = c.key;
@@ -207,7 +225,7 @@
 
   // 새 옷 = 방셀 포스터 벽
   function posterHTML(pageItems){
-    return '<div class="poster-head"><div class="ph-t">NEW LOOKS</div><div class="ph-m">해콩 · ' + esc(LABELS[curCat]||'') + '</div></div>'
+    return '<div class="poster-head"><div class="ph-t">NEW LOOKS</div><div class="ph-m">HAEKONG · ' + esc(LABELS[curCat]||'') + '</div></div>'
       + '<div class="poster-grid">' + pageItems.map((it, idx) => {
         const img = it.image_url ? `<img src="${esc(it.image_url)}" alt="${esc(it.name)}" loading="lazy">` : '<span class="ph-ph">👗</span>';
         const cat = (it.category && LABELS[it.category]) ? `<span class="p-cat">${esc(LABELS[it.category])}</span>` : '';
@@ -216,7 +234,7 @@
           ${img}
           <div class="frame"></div>
           <div class="p-top">
-            <span class="p-brand">해콩</span>
+            <span class="p-brand">HAEKONG</span>
             <span class="p-new">✦ NEW</span>
           </div>
           <div class="p-bottom">
@@ -236,14 +254,16 @@
 
     const items = viewItems();
     if (!items.length){
-      body.innerHTML = '<div class="empty"><div class="empty-icon">👗</div>' + (LABELS[curCat]||'') + ' 항목이 아직 없어요</div>';
+      body.innerHTML = (curMode === 'new')
+        ? '<div class="empty"><div class="empty-icon">✨</div>' + (LABELS[curCat]||'') + ' 새 옷이 아직 없어요<br><span style="font-size:12.5px;opacity:.85">admin에서 옷을 추가할 때 "✨ 새 옷으로 올리기"를 체크하면 여기 포스터로 떠요</span></div>'
+        : '<div class="empty"><div class="empty-icon">👗</div>' + (LABELS[curCat]||'') + ' 항목이 아직 없어요</div>';
       return;
     }
     const totalPages = Math.max(1, Math.ceil(items.length / PER_PAGE));
     if (curPage > totalPages) curPage = 1;
     const pageItems = items.slice((curPage-1)*PER_PAGE, curPage*PER_PAGE);
 
-    const main = gridHTML(pageItems);
+    const main = (curMode === 'new') ? posterHTML(pageItems) : gridHTML(pageItems);
     let pager = '';
     if (totalPages > 1){
       pager = '<div class="dress-pager">';
@@ -275,6 +295,20 @@
   document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLb(); });
 
   load();
+</script>
+<script>
+(function(){
+  if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+  var sw = document.getElementById('themeSwitch');
+  var knob = document.getElementById('themeKnob');
+  function refresh(){ if(knob) knob.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙'; }
+  if (sw) sw.addEventListener('click', function(){
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    refresh();
+  });
+  refresh();
+})();
 </script>
 <!-- 공통 연출(입자·클릭·기울기) -->
 <script src="../fx.js"></script>
