@@ -25,11 +25,13 @@ body.dark .tchip.bad{background:#402832}
 body.dark .nav .cats a:hover{color:#8FD2F5}
 body.dark .nav .logo{color:#9FD2F1}
 body.dark .nav .pg .t{color:#9FD2F1}
-.theme-switch{border:1.5px solid var(--line); background:var(--sheet); width:46px; height:27px; border-radius:999px;
-  cursor:pointer; position:relative; flex:0 0 auto; margin-left:6px; transition:background .25s}
-.theme-switch .knob{position:absolute; top:2px; left:3px; width:19px; height:19px; border-radius:50%;
-  background:var(--main-light); font-size:11px; line-height:19px; text-align:center; transition:left .25s}
-body.dark .theme-switch .knob{left:21px}
+.theme-switch{flex-shrink:0; margin-left:7px; position:relative; width:22px; height:33px; border-radius:999px;
+  border:1.5px solid var(--main-light); background:#eceef1; cursor:pointer; padding:0; transition:background .25s}
+.theme-switch .knob{position:absolute; left:1.5px; top:1.5px; width:16px; height:16px; border-radius:50%;
+  background:#fff; display:flex; align-items:center; justify-content:center; font-size:9px;
+  transition:top .25s, background .25s; box-shadow:0 1px 4px rgba(0,0,0,.2)}
+body.dark .theme-switch{background:#22262e}
+body.dark .theme-switch .knob{top:14px; background:#182C42}
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   transition:background-color .3s;
@@ -50,21 +52,20 @@ body.ready .wrap{opacity:1}
 @media (prefers-reduced-motion: reduce){ .wrap{opacity:1 !important; transition:none} }
 
 /* ── 상단 nav (배경 위) ── */
-.nav{display:flex; align-items:center; gap:clamp(14px,2vw,28px);
-  padding:16px clamp(20px,3vw,50px) 12px}
+.nav{padding:14px 0}
+.nav .nin{max-width:1100px; margin:0 auto; padding:0 20px; display:flex; align-items:center; gap:clamp(14px,2vw,28px)}
 .nav .logo{font-family:'Italiana',serif; font-size:clamp(26px,2.4vw,36px); color:var(--main-dark);
   text-decoration:none; letter-spacing:.03em}
 .nav .pg .t{font-size:15px; font-weight:900; letter-spacing:.28em; color:var(--main-dark)}
 .nav .pg .s{font-size:11px; font-weight:700; color:var(--text-soft); margin-top:2px}
 .nav .sp{flex:1}
-.nav .cats{display:flex; align-items:center; gap:4px; font-size:14px; font-weight:700; color:var(--text-soft)}
+.nav .cats{display:flex; align-items:center; gap:2px; font-size:14px; font-weight:700; color:var(--text-soft)}
 .nav .cats a{text-decoration:none; padding:7px 14px; border-radius:999px}
 .nav .cats a:hover{color:var(--main-dark)}
 .nav .cats a.cur{background:var(--main); color:#fff}
-.nav .cats .dot{opacity:.5}
 
 /* ── 카드 그리드 ── */
-.wrap{max-width:1360px; margin:0 auto; padding:6px clamp(16px,2.4vw,36px) 40px;
+.wrap{max-width:1100px; margin:0 auto; padding:6px 20px 40px;
   display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(14px,1.6vw,22px);
   grid-template-areas:"top top" "left dal" "sched sched" "vod vod"}
 .card{background:var(--sheet); border-radius:18px; padding:clamp(20px,2.4vw,32px) clamp(20px,2.6vw,36px);
@@ -206,18 +207,20 @@ footer{text-align:center; color:var(--text-soft); font-size:12px; line-height:1.
 <body>
 
 <nav class="nav">
+ <div class="nin">
   <a class="logo" href="../index.html">HAEKONG</a>
   <div class="pg"><div class="t">PROFILE</div><div class="s">프로필 · 해콩</div></div>
   <span class="sp"></span>
   <div class="cats">
-    <a href="../index.html">메인</a><span class="dot">·</span>
-    <a href="./" class="cur">프로필</a><span class="dot">·</span>
-    <a href="../notice/">공지</a><span class="dot">·</span>
-    <a href="../schedule/">일정</a><span class="dot">·</span>
-    <a href="../work/">업보</a><span class="dot">·</span>
+    <a href="../index.html">메인</a>
+    <a href="./" class="cur">프로필</a>
+    <a href="../notice/">공지</a>
+    <a href="../schedule/">일정</a>
+    <a href="../work/">업보</a>
     <a href="../dress/">옷장</a>
+    <button class="theme-switch" id="themeSwitch" type="button" aria-label="다크모드"><span class="knob" id="themeKnob">🌙</span></button>
   </div>
-  <button class="theme-switch" id="themeSwitch" type="button" aria-label="다크모드"><span class="knob" id="themeKnob">🌙</span></button>
+ </div>
 </nav>
 
 <div class="wrap">

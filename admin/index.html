@@ -432,9 +432,9 @@
     const status = document.getElementById('upload-status');
     status.textContent = '업로드 중...';
     const ext = file.name.split('.').pop();
-    const { data, error } = await db.storage.from('{{버킷이름}}').upload('profile.' + ext, file, { upsert: true });
+    const { data, error } = await db.storage.from('images').upload('profile.' + ext, file, { upsert: true });
     if (error) { status.textContent = '❌ 업로드 실패: ' + error.message; return; }
-    const { data: u } = db.storage.from('{{버킷이름}}').getPublicUrl('profile.' + ext);
+    const { data: u } = db.storage.from('images').getPublicUrl('profile.' + ext);
     const url = u.publicUrl + '?t=' + Date.now();
     let saved = {};
     try {
