@@ -156,7 +156,7 @@ var FX_TRANS_MS    = 800;    // 커지는 등장 길이(ms). 더 느리게 = 숫
     /* 카드 살짝 기울기 (데스크톱 마우스에서만) */
     if (FX_TILT && mqFine && !mqReduce && !window.__fxTiltOn) {
       window.__fxTiltOn = true;
-      var TILT_SEL = '.card, .item-card, .viewer-card, .notice-item, .up-item, .vod-ph, .d-box';
+      var TILT_SEL = '.card, .item-card, .viewer-card, .notice-item, .up-item, .vod-ph';
       var TILT_DEG = 2.5;                                   /* 감도 (기존 5) */
       var _tiltEl = null;
       document.addEventListener('mousemove', function (e) {

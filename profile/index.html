@@ -213,6 +213,7 @@ footer{text-align:center; color:var(--text-soft); font-size:12px; line-height:1.
 </style>
 </head>
 <body>
+<script>if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');</script>
 
 <nav class="nav">
  <div class="nin">
@@ -359,9 +360,12 @@ function sendInquiry(){
 }
 (function(){
   var sw=document.getElementById('themeSwitch'), kb=document.getElementById('themeKnob');
+  kb.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
   sw.addEventListener('click',function(){
     document.body.classList.toggle('dark');
-    kb.textContent=document.body.classList.contains('dark')?'☀️':'🌙';
+    var dark=document.body.classList.contains('dark');
+    kb.textContent=dark?'☀️':'🌙';
+    localStorage.setItem('theme', dark?'dark':'light');
   });
 })();
 (function(){
