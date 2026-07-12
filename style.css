@@ -100,9 +100,10 @@ body::before {
 
 /* ── 상단 네비게이션 ── */
 .nav {
-  position: sticky; top: 0; z-index: 200;
-  background: rgba(247,248,250,0.88);
-  backdrop-filter: blur(16px);
+  /* 스크롤을 따라 내려오지 않게 고정 해제 (sticky 원하면 아래 2줄 주석 해제) */
+  /* position: sticky; top: 0; backdrop-filter: blur(16px); */
+  position: relative; z-index: 200;
+  background: var(--card);
   border-bottom: 1.5px solid var(--main-light);
   display: flex; justify-content: center;
 }

@@ -188,14 +188,19 @@
     render();
   }
 
+  /* ★ 정렬 = admin ▲▼로 정한 sort_order 우선, 같으면 등록순 (created_at) ★
+     예전엔 새 옷/이벤트를 created_at 역순으로 다시 정렬해서 admin 순서변경이 먹지 않았음 */
+  const byOrder = (a,b) => ((a.sort_order ?? 0) - (b.sort_order ?? 0))
+    || (new Date(a.created_at||0) - new Date(b.created_at||0));
+
   function viewItems(){
     if (curMode === 'event'){
-      return allItems.filter(i => i.category === 'event').slice().sort((a,b)=> new Date(b.created_at||0) - new Date(a.created_at||0)); // 이벤트: 분류 없이 전체 최신순
+      return allItems.filter(i => i.category === 'event').slice().sort(byOrder);          // 이벤트: 분류 없이 전체
     }
     if (curMode === 'new'){
-      return allItems.filter(i => i.category === curCat && isNew(i)).slice().sort((a,b)=> new Date(b.created_at||0) - new Date(a.created_at||0)); // 분류별·최신순
+      return allItems.filter(i => i.category === curCat && isNew(i)).slice().sort(byOrder); // 분류별 · admin 순서
     }
-    return allItems.filter(i => i.category === curCat && !isNew(i));   // 기존 옷: 분류별
+    return allItems.filter(i => i.category === curCat && !isNew(i)).slice().sort(byOrder);  // 기존 옷: 분류별 · admin 순서
   }
 
   function buildTabs(){
