@@ -83,6 +83,7 @@
     body.dark .cell { background:#1b2430; }
     .cell .num { opacity:.55; }
     .cell.gift { border-color:var(--main); border-width:2.5px; box-shadow:0 0 0 3px rgba(62,155,212,.12); }
+    .cell.gift.stamped { border-color:#D9B98C; box-shadow:0 0 0 3px rgba(217,185,140,.22); }
     .cell.gift::after { content:'🎁'; position:absolute; top:-5px; right:-3px; font-size:11px; }
     .cell.stamped { background:#fff; border-color:var(--main); }
     body.dark .cell.stamped { background:var(--card); }
@@ -252,7 +253,7 @@
         const gift = !!REWARD_AT[i];
         const isNext = (i === n+1);
         html += `<div class="cell ${on?'stamped':''} ${gift?'gift':''} ${isNext?'next':''}" title="${i}">
-          ${ on ? `<img class="paw" src="../paw.png" alt="" style="animation-delay:${Math.min(i,40)*8}ms">` : `<span class="num">${i}</span>` }
+          ${ on ? `<img class="paw" src="../${gift ? 'paw_gold.png' : 'paw.png'}" alt="" style="animation-delay:${Math.min(i,40)*8}ms">` : `<span class="num">${i}</span>` }
           ${ gift ? `<span class="tip">${esc(REWARD_AT[i])}</span>` : '' }
         </div>`;
       }
