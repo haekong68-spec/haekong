@@ -55,8 +55,10 @@
     .rw.done { background:var(--main-light); border-color:var(--main); }
     .rw.done .n { background:var(--main); color:#fff; }
     .rw.done .tx { color:var(--text); font-weight:700; }
-    .rw.next { border-color:var(--main); border-style:dashed; }
+    .rw.next { border-color:var(--main); background:rgba(62,155,212,.06); }
     .rw .chk { margin-left:auto; font-size:13px; color:var(--main); padding-top:8px; }
+    .rw .nx { margin-left:auto; flex-shrink:0; font-size:10px; font-weight:800; color:#fff; background:var(--main);
+      padding:3px 8px; border-radius:999px; margin-top:7px; white-space:nowrap; }
 
     .prog { margin-top:14px; padding-top:14px; border-top:1px dashed var(--main-light); }
     .prog .pt { font-size:12px; font-weight:700; color:var(--main-dark); margin-bottom:7px; }
@@ -70,10 +72,10 @@
     .board-top .bn { font-size:19px; font-weight:800; color:var(--main-dark); }
     .board-top .bc { font-size:12px; font-weight:700; letter-spacing:.1em; color:var(--text-soft); white-space:nowrap; }
 
-    .board { display:flex; flex-direction:column; gap:2px; }
+    .board { display:flex; flex-direction:column; gap:2px; padding-right:5%; }   /* 지그재그로 밀리는 만큼 미리 자리 확보 (카드 밖으로 안 나감) */
     .brow { display:grid; grid-template-columns:repeat(10, 1fr); gap:2px; }
-    .brow.odd { margin-left:5%; margin-right:-5%; }        /* 지그재그 */
-    @media (max-width:560px){ .brow { grid-template-columns:repeat(5,1fr); } .brow.odd { margin-left:0; margin-right:0; } }
+    .brow.odd { transform:translateX(5%); }                 /* 반 칸 밀기 = 지그재그 */
+    @media (max-width:560px){ .board { padding-right:10%; } .brow { grid-template-columns:repeat(5,1fr); } .brow.odd { transform:translateX(10%); } }
 
     .cell { position:relative; aspect-ratio:1/1; border-radius:50%; background:var(--bg); border:2px solid var(--main-light);
       display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--text-soft);
@@ -151,7 +153,7 @@
   </div>
 
   <div class="card" id="empty-card" style="display:none">
-    <div class="no-viewer"><div class="ic">🐾</div>아직 등록된 시청자가 없어요</div>
+    <div class="no-viewer"><div class="ic">🐾</div>아직 스탬프 명단에 등록된 사람이 없어요</div>
   </div>
 </div>
 
@@ -176,17 +178,13 @@
   const TOTAL = 100;
   const REWARD_AT = Object.fromEntries(REWARDS.map(r=>[r.at, r.text]));
 
-  let viewers = [], stampMap = {}, current = null;
+  /* 명단 = stamps 테이블 자체 (관리자 🐾스탬프 탭에서 따로 등록 · 업보 시청자와 별개) */
+  let viewers = [], current = null;
 
   async function init(){
-    const [vs, st] = await Promise.all([
-      fetchAll('viewers', { order:'sort_order', asc:true }),
-      fetchAll('stamps',  { order:'id', asc:true })
-    ]);
-    viewers = vs || [];
-    (st||[]).forEach(s=>{ stampMap[s.viewer_id] = s.count || 0; });
+    viewers = await fetchAll('stamps', { order:'sort_order', asc:true }) || [];
 
-    const latest = (st||[]).reduce((m,s)=> s.updated_at && s.updated_at>m ? s.updated_at : m, '');
+    const latest = viewers.reduce((m,s)=> s.updated_at && s.updated_at>m ? s.updated_at : m, '');
     document.getElementById('update-date').textContent = latest ? '갱신일: ' + latest.slice(0,10) : '';
 
     if(!viewers.length){ document.getElementById('chips').innerHTML=''; document.getElementById('empty-card').style.display='block'; enableIframeAutoHeight(); return; }
@@ -201,7 +199,7 @@
     enableIframeAutoHeight();
   }
 
-  function count(vid){ return stampMap[vid] || 0; }
+  function count(vid){ const v = viewers.find(x=>String(x.id)===String(vid)); return v ? (v.count||0) : 0; }
 
   function renderChips(list){
     const el = document.getElementById('chips');
@@ -209,7 +207,7 @@
     el.innerHTML = list.map(v=>{
       const av = soopAvatar(v.soop_id); const ini = (v.nickname||'?').charAt(0);
       const avHtml = av ? `<img class="c-av" src="${av}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\\'c-fb\\'>${ini}</div>'">` : `<div class="c-fb">${ini}</div>`;
-      return `<div class="chip ${current===v.id?'on':''}" onclick="select(${v.id})">
+      return `<div class="chip ${String(current)===String(v.id)?'on':''}" onclick="select('${v.id}')">
         ${avHtml}<span class="c-nick">${esc(v.nickname)}</span><span class="c-cnt">${count(v.id)}</span>
       </div>`;
     }).join('');
@@ -229,7 +227,7 @@
   }
 
   function renderBoard(){
-    const v = viewers.find(x=>x.id===current); if(!v) return;
+    const v = viewers.find(x=>String(x.id)===String(current)); if(!v) return;
     const n = count(v.id);
     document.getElementById('board-wrap').style.display = 'grid';
     document.getElementById('board-name').textContent  = `${v.nickname} 님의 스탬프판`;
@@ -261,7 +259,7 @@
       return `<div class="rw ${done?'done':''} ${isNext?'next':''}">
         <span class="n">${r.at}</span>
         <span class="tx">${esc(r.text)}</span>
-        ${done?'<span class="chk">✔</span>':''}
+        ${done ? '<span class="chk">✔</span>' : (isNext ? '<span class="nx">다음</span>' : '')}
       </div>`;
     }).join('');
 
