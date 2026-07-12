@@ -84,9 +84,10 @@
     .cell .num { opacity:.55; }
     .cell.gift { border-color:var(--main); border-width:2.5px; box-shadow:0 0 0 3px rgba(62,155,212,.12); }
     .cell.gift::after { content:'🎁'; position:absolute; top:-5px; right:-3px; font-size:11px; }
-    .cell.stamped { background:var(--main-light); border-color:var(--main); }
+    .cell.stamped { background:#fff; border-color:var(--main); }
+    body.dark .cell.stamped { background:var(--card); }
     .cell.stamped .num { display:none; }
-    .cell .paw { width:74%; height:74%; object-fit:contain; animation:pawIn .34s cubic-bezier(.34,1.56,.64,1) backwards; }
+    .cell .paw { width:92%; height:92%; object-fit:contain; animation:pawIn .34s cubic-bezier(.34,1.56,.64,1) backwards; }
     .cell.next { animation:pulse 1.6s ease-in-out infinite; }
     @keyframes pawIn { from { transform:scale(0) rotate(-25deg); opacity:0; } to { transform:scale(1) rotate(-7deg); opacity:1; } }
     @keyframes pulse { 0%,100%{ box-shadow:0 0 0 0 rgba(62,155,212,.35);} 50%{ box-shadow:0 0 0 7px rgba(62,155,212,0);} }
@@ -98,6 +99,8 @@
     .cell.gift:hover .tip { opacity:1; }
     .cell.gift:hover { transform:scale(1.12); z-index:6; }
 
+    .hint-line { color:var(--text-soft); font-size:13px; padding:9px 4px; }
+    .hint-line span { opacity:.7; }
     .no-viewer { text-align:center; padding:56px 0; color:var(--text-soft); line-height:1.7; }
     .no-viewer .ic { font-size:44px; margin-bottom:10px; opacity:.5; }
   </style>
@@ -124,7 +127,7 @@
       </div>
       <span class="st-update" id="update-date"></span>
     </div>
-    <div class="st-sub">시청자를 누르면 그 사람의 스탬프판이 열려요. 발도장 10개마다 보상이 있어요!</div>
+    <div class="st-sub">닉네임을 검색해서 본인 스탬프판을 열어보세요. 발도장 10개마다 보상이 있어요!</div>
     <input class="search-box" id="search" placeholder="🔍 닉네임 또는 아이디 검색...">
     <div class="chips" id="chips"><div class="spinner"></div></div>
   </div>
@@ -192,10 +195,14 @@
     /* ?v=닉네임 으로 바로 열기 (링크 공유용) */
     const q = new URLSearchParams(location.search).get('v');
     const found = q ? viewers.find(v=> (v.nickname||'').toLowerCase() === q.toLowerCase() || String(v.id) === q) : null;
-    current = (found || viewers[0]).id;
-
-    renderChips(viewers);
-    renderBoard();
+    if(found){
+      current = found.id;
+      document.getElementById('search').value = found.nickname || '';
+      renderChips(filtered((found.nickname||'').toLowerCase()));
+      renderBoard();
+    } else {
+      renderChips([]);   /* 처음엔 아무도 안 띄움 — 검색해야 나옴 */
+    }
     enableIframeAutoHeight();
   }
 
@@ -203,7 +210,9 @@
 
   function renderChips(list){
     const el = document.getElementById('chips');
-    if(!list.length){ el.innerHTML = '<div style="color:var(--text-soft);font-size:13px;padding:8px 2px">검색 결과가 없어요</div>'; return; }
+    const q = (document.getElementById('search').value||'').trim();
+    if(!q){ el.innerHTML = `<div class="hint-line">🔍 닉네임을 입력하면 여기에 나와요 <span>(등록 ${viewers.length}명)</span></div>`; return; }
+    if(!list.length){ el.innerHTML = '<div class="hint-line">검색 결과가 없어요 — 닉네임을 다시 확인해 주세요</div>'; return; }
     el.innerHTML = list.map(v=>{
       const av = soopAvatar(v.soop_id); const ini = (v.nickname||'?').charAt(0);
       const avHtml = av ? `<img class="c-av" src="${av}" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\\'c-fb\\'>${ini}</div>'">` : `<div class="c-fb">${ini}</div>`;
@@ -278,7 +287,14 @@
   }
 
   document.getElementById('search').addEventListener('input', e=>{
-    renderChips(filtered(e.target.value.trim().toLowerCase()));
+    const q = e.target.value.trim().toLowerCase();
+    const list = q ? filtered(q) : [];
+    /* 딱 한 명만 남으면 자동으로 그 사람 판을 열어줌 */
+    if(list.length === 1) current = list[0].id;
+    else if(!list.some(v=>String(v.id)===String(current))) current = null;
+    renderChips(list);
+    if(current) renderBoard();
+    else { document.getElementById('board-wrap').style.display='none'; enableIframeAutoHeight(); }
   });
 
   init();
