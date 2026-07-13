@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>모아 · 옷장</title>
-  <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/ki/kimghdus/kimghdus.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <title>해콩 · 옷장</title>
+  <link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/ya/yami875/yami875.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <style>
     /* ── 헤더 ── */
@@ -42,7 +40,7 @@
     @media (max-width:900px){ .poster-grid { grid-template-columns:repeat(2,1fr); gap:14px; } }
     @media (max-width:520px){ .poster-grid { grid-template-columns:1fr; gap:18px; } }
 
-    .poster { position:relative; aspect-ratio:3/4; border-radius:10px; overflow:hidden; cursor:pointer; background:#132a1c;
+    .poster { position:relative; aspect-ratio:3/4; border-radius:10px; overflow:hidden; cursor:pointer; background:#0b1722;
       box-shadow:var(--shadow); transition:transform var(--transition), box-shadow var(--transition); }
     .poster:hover { transform:translateY(-6px); box-shadow:var(--shadow-hover); }
     .poster img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
@@ -107,30 +105,24 @@
   </style>
 </head>
 <body>
-<script>if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');</script>
-<div class="mag-sheet">
-<span class="mag-tape"></span>
-<header class="mag-mast">
-  <a href="../index.html" class="mag-wordmark"><span class="nm">모아</span><span class="mg">MAGAZINE</span></a>
-  <nav class="mag-nav">
-    <a href="../index.html">메인</a>
-    <a href="../profile/">프로필</a>
-    <a href="../notice/">공지</a>
-    <a href="../schedule/">일정</a>
-    <a href="../work/">업보</a>
-    <a href="index.html" class="active">옷장</a>
-    <a href="#" onclick="openInquiry();return false;">문의</a>
-  </nav>
-  <button class="mag-dk" id="themeSwitch" type="button" aria-label="다크모드"><span class="knob" id="themeKnob">🌙</span></button>
-</header>
-<div class="mag-rule"></div>
-<div class="mag-issue"><span><b>WARDROBE</b></span><span>옷장</span><span class="dday" id="dday">2026</span></div>
+<nav class="nav"><div class="nav-inner">
+  <a href="../index.html" class="nav-logo">HAEKONG</a>
+  <a href="../index.html">메인</a>
+  <a href="../profile/">프로필</a>
+  <a href="../notice/">공지</a>
+  <a href="../schedule/">일정</a>
+  <a href="../stamp/">스탬프</a>
+  <a href="../work/">업보</a>
+  <a href="index.html" class="active">옷장</a>
+  <button class="theme-switch" id="themeSwitch" type="button" aria-label="다크모드 전환"><span class="knob" id="themeKnob">🌙</span></button>
+</div></nav>
 
 <div class="container stagger">
   <div class="card">
     <div class="dress-head"><span style="font-size:22px">👗</span><span class="t">옷장</span></div>
     <div class="dress-sub">새로 올린 옷은 <b>포스터</b>로, 이미 올린 옷은 <b>기존 옷</b>에서 봐요. 이미지를 누르면 크게 볼 수 있어요</div>
     <div class="mode-seg" id="mode-seg">
+      <button class="seg-btn" data-mode="event">🎉 이벤트</button>
       <button class="seg-btn active" data-mode="new">✨ 새 옷 (포스터)</button>
       <button class="seg-btn" data-mode="old">🗂 기존 옷</button>
     </div>
@@ -138,8 +130,7 @@
     <div id="dress-body"><div class="spinner"></div></div>
   </div>
 </div>
-<div class="mag-colophon">MOA MAGAZINE · VOL.01 &nbsp;—&nbsp; © 2026 모아 (moa) Official · 문의 버튼을 이용해 주세요</div>
-</div>
+<footer>© 2026 해콩 Official.<br>비즈니스 문의 — 문의 버튼을 이용해 주세요</footer>
 
 <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLb()">
   <span class="lightbox-close" onclick="closeLb()">×</span>
@@ -148,19 +139,6 @@
     <div class="lightbox-cap">
       <div class="lb-name" id="lb-name"></div>
       <div class="lb-desc" id="lb-desc"></div>
-    </div>
-  </div>
-</div>
-
-<div class="iq-ov" id="iq-ov" onclick="if(event.target===this)closeInquiry()">
-  <div class="iq-modal">
-    <div class="iq-title">✉️ 문의하기</div>
-    <div class="iq-desc">모아에게 하고 싶은 말을 남겨주세요 🐸💚</div>
-    <input class="iq-input" id="iq-nick" placeholder="닉네임 (필수)">
-    <textarea class="iq-input" id="iq-msg" rows="4" placeholder="문의 내용을 적어주세요"></textarea>
-    <div class="iq-btns">
-      <button class="iq-cancel" onclick="closeInquiry()">취소</button>
-      <button class="iq-send" onclick="sendInquiry()">보내기 💚</button>
     </div>
   </div>
 </div>
@@ -178,6 +156,7 @@
     { key:'lens',   label:'렌즈' },
   ];
   const LABELS = Object.fromEntries(CATS.map(c => [c.key, c.label]));
+  LABELS.event = '이벤트';   // 이벤트 모드 전용 (분류 탭 없음)
   const PER_PAGE = 9;
 
   /* ★ 새 옷(포스터) / 기존 옷 가르기 = admin "✨ 새 옷으로 올리기" 체크 여부 ★
@@ -210,13 +189,19 @@
     render();
   }
 
-  // 관리자 ▲/▼ 순서(sort_order) 우선, 동점이면 최신순
-  const byOrder = (a,b) => ((a.sort_order||0) - (b.sort_order||0)) || (new Date(b.created_at||0) - new Date(a.created_at||0));
+  /* ★ 정렬 = admin ▲▼로 정한 sort_order 우선, 같으면 등록순 (created_at) ★
+     예전엔 새 옷/이벤트를 created_at 역순으로 다시 정렬해서 admin 순서변경이 먹지 않았음 */
+  const byOrder = (a,b) => ((a.sort_order ?? 0) - (b.sort_order ?? 0))
+    || (new Date(a.created_at||0) - new Date(b.created_at||0));
 
   function viewItems(){
-    return allItems
-      .filter(i => i.category === curCat && (curMode === 'new' ? isNew(i) : !isNew(i)))
-      .slice().sort(byOrder);   // 분류별 · admin 순서대로
+    if (curMode === 'event'){
+      return allItems.filter(i => i.category === 'event').slice().sort(byOrder);          // 이벤트: 분류 없이 전체
+    }
+    if (curMode === 'new'){
+      return allItems.filter(i => i.category === curCat && isNew(i)).slice().sort(byOrder); // 분류별 · admin 순서
+    }
+    return allItems.filter(i => i.category === curCat && !isNew(i)).slice().sort(byOrder);  // 기존 옷: 분류별 · admin 순서
   }
 
   function buildTabs(){
@@ -251,7 +236,7 @@
 
   // 새 옷 = 방셀 포스터 벽
   function posterHTML(pageItems){
-    return '<div class="poster-head"><div class="ph-t">NEW LOOKS</div><div class="ph-m">모아 · ' + esc(LABELS[curCat]||'') + '</div></div>'
+    return '<div class="poster-head"><div class="ph-t">NEW LOOKS</div><div class="ph-m">HAEKONG · ' + esc(LABELS[curCat]||'') + '</div></div>'
       + '<div class="poster-grid">' + pageItems.map((it, idx) => {
         const img = it.image_url ? `<img src="${esc(it.image_url)}" alt="${esc(it.name)}" loading="lazy">` : '<span class="ph-ph">👗</span>';
         const cat = (it.category && LABELS[it.category]) ? `<span class="p-cat">${esc(LABELS[it.category])}</span>` : '';
@@ -260,7 +245,7 @@
           ${img}
           <div class="frame"></div>
           <div class="p-top">
-            <span class="p-brand">모아</span>
+            <span class="p-brand">HAEKONG</span>
             <span class="p-new">✦ NEW</span>
           </div>
           <div class="p-bottom">
@@ -276,11 +261,13 @@
 
   function render(){
     const body = document.getElementById('dress-body');
-    document.getElementById('cat-tabs').style.display = 'flex';   // 새 옷·기존 옷 둘 다 분류 탭 사용
+    document.getElementById('cat-tabs').style.display = (curMode === 'event') ? 'none' : 'flex';   // 이벤트 모드는 분류 탭 없음
 
     const items = viewItems();
     if (!items.length){
-      body.innerHTML = (curMode === 'new')
+      body.innerHTML = (curMode === 'event')
+        ? '<div class="empty"><div class="empty-icon">🎉</div>이벤트 의상이 아직 없어요<br><span style="font-size:12.5px;opacity:.85">admin에서 분류를 "이벤트"로 저장하면 여기 포스터로 떠요</span></div>'
+        : (curMode === 'new')
         ? '<div class="empty"><div class="empty-icon">✨</div>' + (LABELS[curCat]||'') + ' 새 옷이 아직 없어요<br><span style="font-size:12.5px;opacity:.85">admin에서 옷을 추가할 때 "✨ 새 옷으로 올리기"를 체크하면 여기 포스터로 떠요</span></div>'
         : '<div class="empty"><div class="empty-icon">👗</div>' + (LABELS[curCat]||'') + ' 항목이 아직 없어요</div>';
       return;
@@ -289,7 +276,7 @@
     if (curPage > totalPages) curPage = 1;
     const pageItems = items.slice((curPage-1)*PER_PAGE, curPage*PER_PAGE);
 
-    const main = (curMode === 'new') ? posterHTML(pageItems) : gridHTML(pageItems);
+    const main = (curMode === 'old') ? gridHTML(pageItems) : posterHTML(pageItems);   // 이벤트·새 옷=포스터, 기존=그리드
     let pager = '';
     if (totalPages > 1){
       pager = '<div class="dress-pager">';
@@ -338,22 +325,5 @@
 </script>
 <!-- 공통 연출(입자·클릭·기울기) -->
 <script src="../fx.js"></script>
-<script>
-function openInquiry(){ document.getElementById('iq-ov').classList.add('show'); }
-function closeInquiry(){ document.getElementById('iq-ov').classList.remove('show'); }
-async function sendInquiry(){
-  var nick=document.getElementById('iq-nick').value.trim(); if(!nick){ alert('닉네임을 적어주세요'); return; }
-  var msg=document.getElementById('iq-msg').value.trim(); if(!msg){ alert('문의 내용을 적어주세요'); return; }
-  var ok=await insertRow('inquiries',{ nickname:nick, message:msg });
-  if(ok){ alert('문의가 전송됐어요! 💚'); document.getElementById('iq-nick').value=''; document.getElementById('iq-msg').value=''; closeInquiry(); }
-  else { alert('전송 실패 ㅠㅠ 잠시 후 다시 시도해주세요'); }
-}
-(function(){
-  var _dd=document.getElementById('dday');
-  if(_dd && typeof fxDday==='function'){ var _n=fxDday('11-28'); if(_n!==null) _dd.textContent=(_n===0?'오늘 생일! 🎉':'생일까지 D-'+_n+' 🎂'); }
-  document.body.classList.add('ready');
-  setTimeout(function(){ document.body.classList.add('ready'); }, 120);
-})();
-</script>
 </body>
 </html>
